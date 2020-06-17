@@ -1,0 +1,13 @@
+flake8
+mypy
+mypy_extensions
+pycodestyle
+pylint
+pylint-quotes
+pytest
+pytype==2020.2.20
+semver
+pyee
+requests
+qrcode
+apscheduler

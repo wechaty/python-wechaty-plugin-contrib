@@ -1,0 +1,2 @@
+pyee
+wechaty>=0.5.dev1
