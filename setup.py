@@ -59,7 +59,7 @@ def get_long_description() -> str:
         return readme_fh.read()
 
 
-def get_install_requires() -> str:
+def get_install_requires() -> list[str]:
     """get install_requires"""
     with open('requirements.txt', 'r') as requirements_fh:
         return requirements_fh.read().splitlines()
@@ -70,7 +70,8 @@ setuptools.setup(
     version=get_version(),
     author='Huan LI (李卓桓)',
     author_email='zixia@zixia.net',
-    description='Wechaty is a Conversational AI Chatbot SDK for WeChat Personal Account',
+    description='Python Wechaty Plugin Contrib is a repo which store the '
+                'pupular wechaty plugins',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
     license='Apache-2.0',
