@@ -4,10 +4,13 @@ from wechaty_plugin_contrib.daily_plugin import (
     DailyPluginOptions,
     DailyPlugin
 )
+from wechaty_plugin_contrib.messager_plugin import MessagerPlugin
 
 __all__ = [
     'DingDongPlugin',
 
     'DailyPluginOptions',
-    'DailyPlugin'
+    'DailyPlugin',
+
+    'MessagerPlugin'
 ]
