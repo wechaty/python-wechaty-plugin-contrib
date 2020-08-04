@@ -2,6 +2,7 @@
 setup
 """
 import os
+from typing import List
 
 import semver
 import setuptools
@@ -59,19 +60,19 @@ def get_long_description() -> str:
         return readme_fh.read()
 
 
-def get_install_requires() -> list[str]:
+def get_install_requires() -> List[str]:
     """get install_requires"""
     with open('requirements.txt', 'r') as requirements_fh:
         return requirements_fh.read().splitlines()
 
 
 setuptools.setup(
-    name='wechaty',
+    name='wechaty-plugin-contrib',
     version=get_version(),
-    author='Huan LI (李卓桓)',
-    author_email='zixia@zixia.net',
+    author='wj-Mcat (吴京京)',
+    author_email='1435130236@qq.com',
     description='Python Wechaty Plugin Contrib is a repo which store the '
-                'pupular wechaty plugins',
+                'pupular wechaty contrib',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
     license='Apache-2.0',

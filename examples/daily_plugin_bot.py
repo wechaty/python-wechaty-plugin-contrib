@@ -3,6 +3,7 @@ import asyncio
 
 from wechaty import Wechaty  # type: ignore
 from wechaty_plugin_contrib.daily_plugin import DailyPluginOptions, DailyPlugin
+from wechaty_plugin_contrib.ding_dong_plugin import DingDongPlugin
 
 
 async def run():
@@ -29,7 +30,9 @@ async def run():
         msg='中午要记得好好吃饭喔～'
     ))
 
-    bot = Wechaty().use(morning_plugin).use(eating_plugin)
+    ding_dong_plugin = DingDongPlugin()
+
+    bot = Wechaty().use(morning_plugin).use(eating_plugin).use(ding_dong_plugin)
     await bot.start()
 
 asyncio.run(run())

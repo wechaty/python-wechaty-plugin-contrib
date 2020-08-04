@@ -63,7 +63,6 @@ class DingDongPlugin(WechatyPlugin):
                 Room, Contact] = from_contact if room is None else room
             conversation_id = from_contact.contact_id if room is None \
                 else room.room_id
-
             if self.can_send_dong(conversation_id):
                 await conversation.ready()
                 await conversation.say('dong')
