@@ -46,4 +46,4 @@ class GitlabEventOptions(WechatyPluginOptions):
 
     listen_port: Optional[int] = 5100
 
-    hook_items: List[GitlabHookItem] = lambda: []
+    hook_items: List[GitlabHookItem] = []
