@@ -22,6 +22,7 @@ from dataclasses import (
     dataclass,
     field
 )
+from enum import Enum
 from typing import Optional, List
 
 from wechaty import (
@@ -29,12 +30,17 @@ from wechaty import (
 )
 
 
+class GithubContentType(Enum):
+    JSON = 0,
+    WWM_FORM_URLENCODED = 1
+
+
 @dataclass
-class GitlabHookItem:
+class GithubHookItem:
     """plugin can hook many gitlab projects, so the GitlabHookItem can specific
     the project
     """
-    id: str
+    project_id: str
 
     room_topic: Optional[str] = None
     room_id: Optional[str] = None
@@ -42,12 +48,11 @@ class GitlabHookItem:
     contact_name: Optional[str] = None
     contact_id: Optional[str] = None
 
-
-@dataclass
-class GitlabEventOptions(WechatyPluginOptions):
-    hook_url: Optional[str] = None
+    content_type: Optional[GithubContentType] = GithubContentType.JSON
     secret_token: Optional[str] = None
 
-    listen_port: Optional[int] = 5100
 
-    hook_items: List[GitlabHookItem] = field(default_factory=list)
+@dataclass
+class GithubWebhookOptions(WechatyPluginOptions):
+    listen_port: Optional[int] = 5101
+    hook_items: List[GithubHookItem] = field(default_factory=list)

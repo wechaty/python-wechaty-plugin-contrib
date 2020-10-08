@@ -1,5 +1,5 @@
 """
-Code Generator - https://github.com/wj-Mcat/code-generator
+python-wechaty-plugin-contrib - https://github.com/wechaty/python-wechaty-plugin-contrib
 
 Authors:    Jingjing WU (吴京京) <https://github.com/wj-Mcat>
 
@@ -17,7 +17,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
+from __future__ import annotations
+import asyncio
 from wechaty import (
     Wechaty, WechatyPlugin,
 )
@@ -67,7 +68,9 @@ class GitlabEventPlugin(WechatyPlugin):
         await runner.setup()
 
         site = web.TCPSite(runner, '0.0.0.0', self.options.listen_port)
-        await site.start()
+
+        loop = asyncio.get_event_loop()
+        asyncio.run_coroutine_threadsafe(site.start(), loop=loop)
         log.info(
             f'the server has started ... 0.0.0.0: {self.options.listen_port}'
         )
