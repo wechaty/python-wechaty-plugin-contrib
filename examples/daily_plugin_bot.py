@@ -3,7 +3,7 @@ import asyncio
 from datetime import datetime
 
 from wechaty import Wechaty  # type: ignore
-from wechaty_puppet import RoomQueryFilter
+from wechaty_puppet import RoomQueryFilter  # type: ignore
 
 from wechaty_plugin_contrib.daily_plugin import DailyPluginOptions, DailyPlugin
 from wechaty_plugin_contrib.ding_dong_plugin import DingDongPlugin
