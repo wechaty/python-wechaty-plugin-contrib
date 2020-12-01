@@ -44,6 +44,7 @@ class MessageFinder(Finder):
                 refer: https://stackoverflow.com/a/56240578/6894382
                 """
                 if inspect.iscoroutinefunction(option):
+                    # pytype: disable=bad-return-type
                     targets = await option(wechaty)
                 else:
                     targets = option(wechaty)

@@ -1,6 +1,6 @@
 """basic ding-dong bot for the wechaty plugin"""
-from typing import Union, Optional, List
-from dataclasses import dataclass
+from typing import List, Union
+from dataclasses import dataclass, field
 from wechaty import Message, Contact, Room, get_logger  # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
 
@@ -15,13 +15,13 @@ class DingDongPluginOptions(WechatyPluginOptions):
 
     only one of [include_conversation_ids,exclude_conversation_ids] can be empty
     """
-    include_conversation_ids: Optional[List[str]] = None
-    exclude_conversation_ids: Optional[List[str]] = None
+    include_conversation_ids: List[str] = field(default_factory=list)
+    exclude_conversation_ids: List[str] = field(default_factory=list)
 
 
 class DingDongPlugin(WechatyPlugin):
     """basic ding-dong plugin"""
-    def __init__(self, options: Optional[DingDongPluginOptions] = None):
+    def __init__(self, options: DingDongPluginOptions = None):
         super().__init__(options)
 
         if options is not None:
@@ -59,8 +59,7 @@ class DingDongPlugin(WechatyPlugin):
         text = msg.text()
         room = msg.room()
         if text == '#ding':
-            conversation: Union[
-                Room, Contact] = from_contact if room is None else room
+            conversation: Union[Room, Contact] = from_contact if room is None else room
             conversation_id = from_contact.contact_id if room is None \
                 else room.room_id
             if self.can_send_dong(conversation_id):

@@ -32,6 +32,7 @@ class RoomMatcher(Matcher):
                 refer: https://stackoverflow.com/a/56240578/6894382
                 """
                 if inspect.iscoroutinefunction(option):
+                    # pytype: disable=bad-return-type
                     is_match = await option(target)
                 else:
                     is_match = option(target)
