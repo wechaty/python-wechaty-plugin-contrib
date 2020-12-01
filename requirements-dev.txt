@@ -11,4 +11,3 @@ pyee
 requests
 qrcode
 apscheduler
-semver
