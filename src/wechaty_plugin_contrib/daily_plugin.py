@@ -1,9 +1,10 @@
 """daily plugin"""
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Optional, Union, List, Any
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler     # type: ignore
+from apscheduler.schedulers.base import BaseScheduler   # type: ignore
 
 from wechaty import Wechaty, get_logger, Room, Contact      # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
@@ -42,6 +43,8 @@ class DailyPlugin(WechatyPlugin):
             raise Exception('msg should not be none')
 
         self.options: DailyPluginOptions = options
+        self.scheduler: BaseScheduler = AsyncIOScheduler()
+        self._scheduler_jobs: List[Any] = []
 
     @property
     def name(self) -> str:
@@ -67,8 +70,20 @@ class DailyPlugin(WechatyPlugin):
     async def init_plugin(self, wechaty: Wechaty):
         """init plugin"""
         await super().init_plugin(wechaty)
-        scheduler = AsyncIOScheduler()
-        scheduler.add_job(self.tick, self.options.trigger,
-                          kwargs={'msg': self.options.msg},
-                          **self.options.kwargs)
-        scheduler.start()
+        for job in self._scheduler_jobs:
+            job(wechaty)
+        self.scheduler.start()
+
+    def add_interval_job(self, func):
+        """add interval job"""
+
+        def add_job(bot: Wechaty):
+            self.scheduler.add_job(
+                func,
+                trigger='interval',
+                seconds=5,
+                kwargs={
+                    'bot': bot
+                }
+            )
+        self._scheduler_jobs.append(add_job)

@@ -4,7 +4,12 @@ from wechaty_plugin_contrib.daily_plugin import (
     DailyPluginOptions,
     DailyPlugin
 )
-from wechaty_plugin_contrib.messager_plugin import MessagerPlugin
+
+from wechaty_plugin_contrib.contrib import (
+    AutoReplyRule,
+    AutoReplyOptions,
+    AutoReplyPlugin
+)
 
 __all__ = [
     'DingDongPlugin',
@@ -12,5 +17,7 @@ __all__ = [
     'DailyPluginOptions',
     'DailyPlugin',
 
-    'MessagerPlugin'
+    'AutoReplyRule',
+    'AutoReplyOptions',
+    'AutoReplyPlugin'
 ]

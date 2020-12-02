@@ -2,13 +2,13 @@
 plugin validator
 """
 from __future__ import annotations
-from wechaty import WechatyPlugin
+from wechaty import WechatyPlugin   # type: ignore
 
 
 def validate_plugin(plugin: WechatyPlugin):
     """validate the plugin"""
     # check the name of the plugin
-    if type(plugin) is WechatyPlugin:
+    if isinstance(plugin, WechatyPlugin):
         raise Exception('plugin instance should a subclass of WechatyPlugin')
 
     # check the name of plugin

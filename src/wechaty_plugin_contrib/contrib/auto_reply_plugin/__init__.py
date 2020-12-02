@@ -1,4 +1,4 @@
-from .auto_reply_plugin import (
+from .plugin import (
     AutoReplyRule,
     AutoReplyOptions,
     AutoReplyPlugin
