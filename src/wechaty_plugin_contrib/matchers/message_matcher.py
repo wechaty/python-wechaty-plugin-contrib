@@ -19,6 +19,9 @@ class MessageMatcher(Matcher):
         """match the room"""
         logger.info(f'MessageMatcher match({target})')
 
+        if not isinstance(target, Message):
+            return False
+
         for option in self.options:
             if isinstance(option, Pattern):
                 re_pattern = re.compile(option)
@@ -36,6 +39,10 @@ class MessageMatcher(Matcher):
                     is_match = await option(target)
                 else:
                     is_match = option(target)
+
+            elif isinstance(option, bool):
+                return option
+
             else:
                 raise ValueError(f'unknown type option: {option}')
 

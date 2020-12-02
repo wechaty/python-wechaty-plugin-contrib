@@ -19,14 +19,20 @@ class RoomMatcher(Matcher):
         """match the room"""
         logger.info(f'RoomMatcher match({target})')
 
+        if not isinstance(target, Room):
+            return False
+
         for option in self.options:
+
             if isinstance(option, Pattern):
                 re_pattern = re.compile(option)
                 # match the room with regex pattern
                 topic = await target.topic()
                 is_match = re.match(re_pattern, topic)
+
             elif isinstance(option, str):
                 is_match = target.room_id == option
+
             elif hasattr(option, '__call__'):
                 """check the type of the function
                 refer: https://stackoverflow.com/a/56240578/6894382
@@ -36,6 +42,10 @@ class RoomMatcher(Matcher):
                     is_match = await option(target)
                 else:
                     is_match = option(target)
+
+            elif isinstance(option, bool):
+                return option
+
             else:
                 raise ValueError(f'unknown type option: {option}')
 
