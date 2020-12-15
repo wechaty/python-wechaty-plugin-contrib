@@ -3,7 +3,7 @@ import asyncio
 
 from wechaty import Wechaty  # type: ignore
 
-from wechaty_puppet import (
+from wechaty_puppet import (    # type: ignore
     FileBox
 )
 
