@@ -3,9 +3,16 @@ from .auto_reply_plugin import (
     AutoReplyOptions,
     AutoReplyPlugin
 )
+from .room_inviter import (
+    RoomInviterPlugin,
+    RoomInviterOptions
+)
 
 __all__ = [
     'AutoReplyOptions',
     'AutoReplyPlugin',
-    'AutoReplyRule'
+    'AutoReplyRule',
+
+    'RoomInviterPlugin',
+    'RoomInviterOptions'
 ]
