@@ -2,6 +2,7 @@
 import re
 from re import Pattern
 import inspect
+from typing import Awaitable
 
 from wechaty_plugin_contrib.config import (
     get_logger,
@@ -27,18 +28,19 @@ class MessageMatcher(Matcher):
                 re_pattern = re.compile(option)
                 # match the room with regex pattern
                 topic = target.text()
-                is_match = re.match(re_pattern, topic)
+                is_match = not re.match(re_pattern, topic)
             elif isinstance(option, str):
-                is_match = target.message_id == option
-            elif hasattr(option, '__call__'):
-                """check the type of the function
-                refer: https://stackoverflow.com/a/56240578/6894382
-                """
-                if inspect.iscoroutinefunction(option):
-                    # pytype: disable=bad-return-type
-                    is_match = await option(target)
-                else:
-                    is_match = option(target)
+                is_match = target.message_id == option or target.text() == option
+
+            # TODO: support check callback
+            # elif callable(option):
+            #     """check the type of the function
+            #     refer: https://stackoverflow.com/a/56240578/6894382
+            #     """
+            #     if inspect.iscoroutinefunction(option):
+            #         is_match = await option(target)
+            #     else:
+            #         is_match = option(target)
 
             elif isinstance(option, bool):
                 return option

@@ -32,17 +32,16 @@ class ContactMatcher(Matcher):
             elif isinstance(option, str):
                 # make sure that the contact is ready
                 await target.ready()
-                is_match = target.contact_id == option or option in target.name
+                is_match = target.contact_id == option or option == target.name
 
-            elif hasattr(option, '__call__'):
-                """check the type of the function
-                refer: https://stackoverflow.com/a/56240578/6894382
-                """
-                if inspect.iscoroutinefunction(option):
-                    # pytype: disable=bad-return-type
-                    is_match = await option(target)
-                else:
-                    is_match = option(target)
+            # elif hasattr(option, '__call__'):
+            #     """check the type of the function
+            #     refer: https://stackoverflow.com/a/56240578/6894382
+            #     """
+            #     if inspect.iscoroutinefunction(option):
+            #         is_match = await option(target)
+            #     else:
+            #         is_match = option(target)
 
             elif isinstance(option, bool):
                 return option
