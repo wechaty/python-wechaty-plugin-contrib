@@ -11,3 +11,8 @@ pyee
 requests
 qrcode
 apscheduler
+pytest-asyncio
+pytest-trio
+pytest-tornasync
+pytest-twisted
+twisted
