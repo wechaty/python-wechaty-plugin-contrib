@@ -1,20 +1,8 @@
 """unit test for message matcher"""
 import re
 
-from wechaty import Message
-
+from tests.fake_message import FakeMessage
 from wechaty_plugin_contrib.matchers import MessageMatcher
-
-
-class FakeMessage(Message):
-    """Fake Message for unit test"""
-    def __init__(self, message: str = 'wechaty', message_id: str = 'fake-id'):
-        self.message = message
-        self.message_id = message_id
-
-    def text(self) -> str:
-        """return fake message"""
-        return self.message
 
 
 async def test_message_matcher_with_str():
