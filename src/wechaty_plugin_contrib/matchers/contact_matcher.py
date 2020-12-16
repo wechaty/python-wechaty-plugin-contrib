@@ -19,23 +19,32 @@ class ContactMatcher(Matcher):
         """match the room"""
         logger.info(f'ContactMatcher match({target})')
 
+        if not isinstance(target, Contact):
+            return False
+
         for option in self.options:
             if isinstance(option, Pattern):
-                re_pattern = re.compile(option)
                 # match the room with regex pattern
                 contact_alias = await target.alias()
-                is_match = re.match(re_pattern, target.name) or re.match(re_pattern, contact_alias)
+                is_match = re.match(option, target.name) is not None or \
+                    re.match(option, contact_alias) is not None
+
             elif isinstance(option, str):
-                is_match = target.contact_id == option
-            elif hasattr(option, '__call__'):
-                """check the type of the function
-                refer: https://stackoverflow.com/a/56240578/6894382
-                """
-                if inspect.iscoroutinefunction(option):
-                    # pytype: disable=bad-return-type
-                    is_match = await option(target)
-                else:
-                    is_match = option(target)
+                # make sure that the contact is ready
+                await target.ready()
+                is_match = target.contact_id == option or option == target.name
+
+            # elif hasattr(option, '__call__'):
+            #     """check the type of the function
+            #     refer: https://stackoverflow.com/a/56240578/6894382
+            #     """
+            #     if inspect.iscoroutinefunction(option):
+            #         is_match = await option(target)
+            #     else:
+            #         is_match = option(target)
+
+            elif isinstance(option, bool):
+                return option
             else:
                 raise ValueError(f'unknown type option: {option}')
 
