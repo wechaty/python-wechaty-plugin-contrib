@@ -32,7 +32,8 @@ class RoomMatcher(Matcher):
                 topic = await target.topic()
                 is_match = re.match(option, topic) is not None
             elif isinstance(option, str):
-                is_match = target.room_id == option or target.topic() == option
+                topic = await target.topic()
+                is_match = target.room_id == option or topic == option
 
             # TODO: support check callback
             # elif hasattr(option, '__call__'):

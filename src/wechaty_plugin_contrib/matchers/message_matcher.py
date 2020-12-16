@@ -29,6 +29,7 @@ class MessageMatcher(Matcher):
                 topic = target.text()
                 is_match = re.match(option, topic) is not None
             elif isinstance(option, str):
+                await target.ready()
                 is_match = target.message_id == option or target.text() == option
 
             # TODO: support check callback

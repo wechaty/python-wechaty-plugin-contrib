@@ -59,7 +59,7 @@ class RoomInviterPlugin(WechatyPlugin):
 
     async def init_plugin(self, wechaty: Wechaty):
         """listen room-join events and say welcome"""
-        async def on_room_join(_, room: Room, invitees: List[Contact], *args):
+        async def on_room_join(room: Room, invitees: List[Contact], *args):
             if room.room_id in self.welcome_ids:
                 for invited_contact in invitees:
                     if invited_contact.contact_id in self.welcome_ids[room.room_id]:
@@ -75,6 +75,10 @@ class RoomInviterPlugin(WechatyPlugin):
 
     async def on_message(self, msg: Message):
         """check the keyword and reply to talker"""
+
+        # don't listen in room
+        if msg.room():
+            return
 
         talker = msg.talker()
 
