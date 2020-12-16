@@ -28,11 +28,9 @@ class RoomMatcher(Matcher):
         for option in self.options:
 
             if isinstance(option, Pattern):
-                re_pattern = re.compile(option)
                 # match the room with regex pattern
                 topic = await target.topic()
-                is_match = re.match(re_pattern, topic)
-
+                is_match = re.match(option, topic) is not None
             elif isinstance(option, str):
                 is_match = target.room_id == option or target.topic() == option
 

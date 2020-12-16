@@ -86,8 +86,8 @@ class RoomInviterPlugin(WechatyPlugin):
                 rooms = []
                 for rule in rules:
                     # pytype: disable=attribute-error
-                    find_rooms = await rule.find_rooms(self.bot)
-                    rooms.extend(find_rooms)
+                    matched_rooms = await rule.find_rooms(self.bot)
+                    rooms.extend(matched_rooms)
 
                 # invite person to the room
                 for room in rooms:

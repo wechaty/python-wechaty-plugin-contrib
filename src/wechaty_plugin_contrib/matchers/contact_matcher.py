@@ -24,10 +24,10 @@ class ContactMatcher(Matcher):
 
         for option in self.options:
             if isinstance(option, Pattern):
-                re_pattern = re.compile(option)
                 # match the room with regex pattern
                 contact_alias = await target.alias()
-                is_match = re.match(re_pattern, target.name) or re.match(re_pattern, contact_alias)
+                is_match = re.match(option, target.name) is not None or \
+                    re.match(option, contact_alias) is not None
 
             elif isinstance(option, str):
                 # make sure that the contact is ready

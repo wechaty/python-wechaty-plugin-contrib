@@ -25,10 +25,9 @@ class MessageMatcher(Matcher):
 
         for option in self.options:
             if isinstance(option, Pattern):
-                re_pattern = re.compile(option)
                 # match the room with regex pattern
                 topic = target.text()
-                is_match = not re.match(re_pattern, topic)
+                is_match = re.match(option, topic) is not None
             elif isinstance(option, str):
                 is_match = target.message_id == option or target.text() == option
 
