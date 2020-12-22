@@ -7,7 +7,9 @@ from wechaty import (  # type: ignore
     WechatyPluginOptions,
     FileBox,
     Contact,
-    Message, Room
+    Message,
+    Room,
+    MiniProgram
 )
 
 from wechaty_puppet import (    # type: ignore
@@ -28,7 +30,7 @@ from wechaty_plugin_contrib.exception import (
 @dataclass
 class AutoReplyRule:
     keyword: str
-    reply_content: Union[str, FileBox, Contact, Message, ]
+    reply_content: Union[str, FileBox, Contact, Message, MiniProgram]
 
 
 @dataclass
