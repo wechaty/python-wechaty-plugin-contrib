@@ -28,7 +28,7 @@ from wechaty_plugin_contrib.exception import (
 @dataclass
 class AutoReplyRule:
     keyword: str
-    reply_content: Union[str, FileBox, Contact, Message]
+    reply_content: Union[str, FileBox, Contact, Message, ]
 
 
 @dataclass
