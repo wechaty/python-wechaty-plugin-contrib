@@ -41,7 +41,7 @@ You are welcome to send your plugin to our contrib by creating a Pull Request!
 ```python
 from wechaty_plugin_contrib import DingDongPlugin
 
-bot.use(DingDong())
+bot.use(DingDongPlugin())
 ```
 
 
