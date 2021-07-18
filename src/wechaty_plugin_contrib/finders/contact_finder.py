@@ -13,13 +13,14 @@ from wechaty_plugin_contrib.config import (
 from .finder import Finder
 
 
-logger = get_logger("MessageFinder")
+logger = get_logger("ContactFinder")
 
 
-class MessageFinder(Finder):
+class ContactFinder(Finder):
+    """Contact Finder can find contacts with options"""
     async def match(self, wechaty: Wechaty) -> List[Contact]:
-        """match the room"""
-        logger.info(f'MessageFinder match({Wechaty})')
+        """match the contact"""
+        logger.info(f'ContactFinder match({Wechaty})')
 
         contacts: List[Contact] = []
 

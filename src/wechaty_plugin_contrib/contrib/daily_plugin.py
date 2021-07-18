@@ -50,7 +50,7 @@ class DailyPlugin(WechatyPlugin):
     def name(self) -> str:
         """get the name of the plugin"""
         if self.options is None or self.options.name is None:
-            return 'dayily'
+            return 'daily'
         return self.options.name
 
     async def tick(self, msg: str):

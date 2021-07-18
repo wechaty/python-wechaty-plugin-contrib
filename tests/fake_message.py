@@ -1,3 +1,5 @@
+"""fake Message Target"""
+from __future__ import annotations
 from wechaty import Message
 
 

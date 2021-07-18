@@ -2,7 +2,6 @@
 from re import Pattern
 from typing import (
     Callable,
-    Optional,
     Union,
     List,
 )
