@@ -4,6 +4,10 @@ from wechaty_plugin_contrib.daily_plugin import (
     DailyPluginOptions,
     DailyPlugin
 )
+from wechaty_plugin_contrib.rasa_rest_plugin import (
+    RasaRestPluginOptions,
+    RasaRestPlugin
+)
 
 from wechaty_plugin_contrib.contrib import (
     AutoReplyRule,
@@ -16,6 +20,9 @@ __all__ = [
 
     'DailyPluginOptions',
     'DailyPlugin',
+
+    'RasaRestPluginOptions',
+    'RasaRestPlugin',
 
     'AutoReplyRule',
     'AutoReplyOptions',
