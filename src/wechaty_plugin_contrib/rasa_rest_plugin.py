@@ -60,7 +60,7 @@ class RasaRestPlugin(WechatyPlugin):
         # only process the plain text message
         if msg.type() != MessageType.MESSAGE_TYPE_TEXT:
             return
-        
+
         has_mention_self = await msg.mention_self()
         if not has_mention_self:
             return
