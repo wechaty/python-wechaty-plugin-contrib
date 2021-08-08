@@ -62,7 +62,7 @@ class RasaRestPlugin(WechatyPlugin):
             return
 
         has_mention_self = await msg.mention_self()
-        if not has_mention_self:
+        if not has_mention_self and room:
             return
 
         rasa_response = requests.post(
