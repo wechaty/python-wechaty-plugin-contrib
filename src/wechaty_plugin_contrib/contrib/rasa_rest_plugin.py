@@ -7,6 +7,7 @@ import requests
 from wechaty import Message, Contact, Room, get_logger  # type: ignore
 from wechaty.exceptions import WechatyPluginError   # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
+from wechaty.user import ContactSelf
 from wechaty_grpc.wechaty.puppet import MessageType     # type: ignore
 
 # from wechaty_plugin_contrib.finders.finder import Finder  # type: ignore
@@ -53,28 +54,48 @@ class RasaRestPlugin(WechatyPlugin):
 
         conversation_id = room.room_id if room else talker.contact_id
 
-        # 1. TODO: use finder to match Room/Contact
-        if conversation_id not in self.conversation_ids:
-            return
+        # # 1. TODO: use finder to match Room/Contact
+        # if conversation_id not in self.conversation_ids:
+        #     return
 
         # only process the plain text message
         if msg.type() != MessageType.MESSAGE_TYPE_TEXT:
             return
 
+        mention_self = await msg.mention_self()
+        if not mention_self and room:
+            return
+
+        text: str = msg.text()
+
+        mention_list: List[Contact] = await msg.mention_list()
+        for contact in mention_list:
+            await contact.ready()
+            mention_text = f'@{contact.name}'
+            if mention_text in text:
+                text = text.replace(mention_text, '')
+
+        text = text.strip()
         rasa_response = requests.post(
             self.endpoint,
             json=dict(
                 sender=conversation_id,
-                message=msg.text()
+                message=text
             )
         )
         messages: List[dict] = rasa_response.json()
         if len(messages) == 0:
             return
 
-        conversational: Union[Room, Contact] = room if room else talker
-        for message in messages:
-            msg_text = message.get('text', None)
-            if not msg_text:
-                continue
-            await conversational.say(msg_text)
+        if room:
+            for message in messages:
+                msg_text = message.get('text', None)
+                if not msg_text:
+                    continue
+                await room.say(msg_text, mention_ids=[talker.contact_id])
+        else:
+            for message in messages:
+                msg_text = message.get('text', None)
+                if not msg_text:
+                    continue
+                await talker.say(msg_text)

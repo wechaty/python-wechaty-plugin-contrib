@@ -1,5 +1,5 @@
 """basic ding-dong bot for the wechaty plugin"""
-from typing import List, Union
+from typing import List, Optional, Union
 from dataclasses import dataclass, field
 from wechaty import Message, Contact, Room, get_logger  # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
@@ -21,7 +21,7 @@ class DingDongPluginOptions(WechatyPluginOptions):
 
 class DingDongPlugin(WechatyPlugin):
     """basic ding-dong plugin"""
-    def __init__(self, options: DingDongPluginOptions = None):
+    def __init__(self, options: Optional[DingDongPluginOptions] = None):
         super().__init__(options)
 
         if options is not None:
