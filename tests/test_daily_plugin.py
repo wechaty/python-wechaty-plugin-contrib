@@ -1,8 +1,7 @@
 """
 Unit test
 """
-import pytest
-from wechaty_plugin_contrib.daily_plugin import DailyPluginOptions
+from wechaty_plugin_contrib import DailyPluginOptions
 
 
 def test_plugin():

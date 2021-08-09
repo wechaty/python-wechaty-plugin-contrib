@@ -40,18 +40,20 @@ class ContactFinder(Finder):
                 contact = wechaty.Contact.load(option)
                 await contact.ready()
                 contacts.append(contact)
-            elif hasattr(option, '__call__'):
-                """check the type of the function
-                refer: https://stackoverflow.com/a/56240578/6894382
-                """
-                if inspect.iscoroutinefunction(option):
-                    # pytype: disable=bad-return-type
-                    targets = await option(wechaty)
-                else:
-                    targets = option(wechaty)
 
-                if isinstance(targets, List[Contact]):
-                    contacts.extend(targets)
+            # TODO: implement callback function to find contacts
+            # elif hasattr(option, '__call__'):
+            #     """check the type of the function
+            #     refer: https://stackoverflow.com/a/56240578/6894382
+            #     """
+            #     if inspect.iscoroutinefunction(option):
+            #         # pytype: disable=bad-return-type
+            #         targets = await option(wechaty)
+            #     else:
+            #         targets = option(wechaty)
+            #
+            #     if isinstance(targets, List[Contact]):
+            #         contacts.extend(targets)
             else:
                 raise ValueError(f'unknown type option: {option}')
         return contacts

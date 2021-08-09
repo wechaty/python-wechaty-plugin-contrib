@@ -7,10 +7,7 @@ import requests
 from wechaty import Message, Contact, Room, get_logger  # type: ignore
 from wechaty.exceptions import WechatyPluginError   # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
-from wechaty.user import ContactSelf
 from wechaty_grpc.wechaty.puppet import MessageType     # type: ignore
-
-# from wechaty_plugin_contrib.finders.finder import Finder  # type: ignore
 
 
 log = get_logger('DingDongPlugin')
@@ -54,9 +51,9 @@ class RasaRestPlugin(WechatyPlugin):
 
         conversation_id = room.room_id if room else talker.contact_id
 
-        # # 1. TODO: use finder to match Room/Contact
-        # if conversation_id not in self.conversation_ids:
-        #     return
+        # 1. TODO: use finder to match Room/Contact
+        if self.conversation_ids and conversation_id not in self.conversation_ids:
+            return
 
         # only process the plain text message
         if msg.type() != MessageType.MESSAGE_TYPE_TEXT:

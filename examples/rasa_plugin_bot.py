@@ -9,6 +9,7 @@ from wechaty_plugin_contrib import (
     RasaRestPluginOptions
 )
 
+
 async def run():
     """async run method"""
     options = RasaRestPluginOptions(
@@ -16,8 +17,9 @@ async def run():
         conversation_ids=['room-id', 'contact-id']
     )
     rasa_plugin = RasaRestPlugin(options)
-    
+
     bot = Wechaty().use(rasa_plugin)
     await bot.start()
+
 
 asyncio.run(run())
