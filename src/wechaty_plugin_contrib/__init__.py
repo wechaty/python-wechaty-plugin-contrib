@@ -32,6 +32,11 @@ from wechaty_plugin_contrib.contrib.room_inviter import (
     RoomInviterPlugin
 )
 
+from wechaty_plugin_contrib.contrib.chat_history_plugin import (
+    ChatHistoryPluginOptions,
+    ChatHistoryPlugin
+)
+
 __all__ = [
     'FinderOptions',
     'FinderOption',
@@ -59,6 +64,9 @@ __all__ = [
     'RasaRestPluginOptions',
 
     'RoomInviterOptions',
-    'RoomInviterPlugin'
+    'RoomInviterPlugin',
+
+    'ChatHistoryPluginOptions',
+    'ChatHistoryPlugin',
 
 ]

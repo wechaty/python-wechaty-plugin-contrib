@@ -17,3 +17,4 @@ pytest-tornasync
 pytest-twisted
 types-requests
 twisted
+aiosqlite
