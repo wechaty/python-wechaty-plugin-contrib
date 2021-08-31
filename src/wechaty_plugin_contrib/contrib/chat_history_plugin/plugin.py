@@ -1,12 +1,19 @@
 """Chat history plugin"""
 import os
-import aiosqlite
 from typing import Optional, List
 from dataclasses import dataclass, field
 from wechaty_puppet import MessageType  # type: ignore
 from wechaty import Message, get_logger  # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
-
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import (  # type: ignore
+    Column,
+    Integer,
+    DateTime,
+    VARCHAR,
+    Text
+)
 
 logger = get_logger('ChatHistoryPlugin')
 
@@ -18,6 +25,22 @@ SUPPORTED_MESSAGE_FILE_TYPES: List[MessageType] = [
     MessageType.MESSAGE_TYPE_AUDIO
 ]
 
+Base = declarative_base()
+
+
+class ChatHistory(Base):
+    """ChatHistory"""
+    __tablename__ = 'ChatHistory'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    msg_id = Column(Integer, default=None)
+    msg_date = Column(DateTime, default=None)
+    msg_type = Column(Integer, default=None)
+    msg_room = Column(VARCHAR(50), default=None)
+    msg_talker = Column(VARCHAR(50), default=None)
+    msg_receiver = Column(VARCHAR(50), default=None)
+    msg_text = Column(Text, default=None)
+
 
 @dataclass
 class ChatHistoryPluginOptions(WechatyPluginOptions):
@@ -25,6 +48,7 @@ class ChatHistoryPluginOptions(WechatyPluginOptions):
     chat history plugin options
     """
     chat_history_path: str = field(default_factory=str)
+    chat_history_database: str = field(default_factory=str)
 
 
 class ChatHistoryPlugin(WechatyPlugin):
@@ -36,8 +60,10 @@ class ChatHistoryPlugin(WechatyPlugin):
             self.chat_history_path = os.path.join(os.getcwd(), 'chathistory')
         if not os.path.exists(self.chat_history_path):
             os.makedirs(self.chat_history_path)
-        self.database_path = os.path.join(
-            self.chat_history_path, 'chathistory.db')
+        if not options.chat_history_database:
+            self.chat_history_database = 'sqlite+aiosqlite:///chathistory.db'
+        else:
+            self.chat_history_database = options.chat_history_database
 
     @property
     def name(self) -> str:
@@ -45,37 +71,27 @@ class ChatHistoryPlugin(WechatyPlugin):
 
     async def on_message(self, msg: Message):
         """listen message event"""
-        msg_id = msg.message_id
-        msg_date = msg.date()
-        msg_talker = str(msg.talker()) if msg.payload.from_id else None
-        msg_to = str(msg.to()) if msg.payload.to_id else None
-        msg_room = str(msg.room()) if msg.payload.room_id else None
-        msg_text = msg.text()
-        msg_type = msg.type()
-        message = (msg_date, msg_id, msg_type,
-                   msg_talker, msg_to, msg_room, msg_text)
-
-        conn = await aiosqlite.connect(self.database_path)
-        create_database_sql = """
-        CREATE TABLE IF NOT EXISTS ChatHistory(
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            msg_date DATETIME DEFAULT NULL,
-            msg_id VARCHAR(50) DEFAULT NULL,
-            msg_type INTEGER DEFAULT NULL,
-            msg_talker VARCHAR(50) DEFAULT NULL,
-            msg_to VARCHAR(50) DEFAULT NULL,
-            msg_room VARCHAR(50) DEFAULT NULL,
-            msg_text TEXT DEFAULT NULL
-        );
-        """
-        await conn.execute(create_database_sql)
-        insert_table_sql = """
-        INSERT INTO ChatHistory (msg_date, msg_id, msg_type, msg_talker, msg_to, msg_room, msg_text) 
-        VALUES (?, ?, ?, ?, ?, ?, ?);
-        """
-        await conn.execute(insert_table_sql, message)
-        await conn.commit()
-        await conn.close()
+        async_engine = create_async_engine(self.chat_history_database)
+        async with async_engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        async_session = sessionmaker(async_engine,
+                                     expire_on_commit=False,
+                                     class_=AsyncSession)
+        async with async_session() as session:
+            async with session.begin():
+                chathistroy = ChatHistory(
+                    msg_id=msg.message_id,
+                    msg_date=msg.date(),
+                    msg_type=msg.type(),
+                    msg_room=str(msg.room()) if msg.payload.room_id else None,
+                    msg_talker=str(
+                        msg.talker()) if msg.payload.from_id else None,
+                    msg_receiver=str(msg.to()) if msg.payload.to_id else None,
+                    msg_text=msg.text()
+                )
+                session.add(chathistroy)
+            await session.commit()
+        await async_engine.dispose()
 
         if msg.type() in SUPPORTED_MESSAGE_FILE_TYPES:
             file_box = await msg.to_file_box()

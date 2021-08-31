@@ -67,6 +67,6 @@ __all__ = [
     'RoomInviterPlugin',
 
     'ChatHistoryPluginOptions',
-    'ChatHistoryPlugin',
+    'ChatHistoryPlugin'
 
 ]

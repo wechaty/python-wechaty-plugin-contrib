@@ -18,3 +18,5 @@ pytest-twisted
 types-requests
 twisted
 aiosqlite
+aiomysql
+asyncpg

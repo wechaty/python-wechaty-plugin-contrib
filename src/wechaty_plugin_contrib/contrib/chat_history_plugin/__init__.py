@@ -5,5 +5,5 @@ from .plugin import (
 
 __all__ = [
     'ChatHistoryPluginOptions',
-    'ChatHistoryPlugin',
+    'ChatHistoryPlugin'
 ]
