@@ -1,13 +1,13 @@
 """Chat history plugin"""
 import os
-from typing import Optional, List
+from typing import Optional, List, Any
 from dataclasses import dataclass, field
-from wechaty_puppet import MessageType, FileBox  # type: ignore
-from wechaty import Wechaty, Message, get_logger  # type: ignore
-from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine  # type: ignore
-from sqlalchemy.orm import sessionmaker, declarative_base  # type: ignore
-from sqlalchemy import (  # type: ignore
+from wechaty_puppet import MessageType, FileBox
+from wechaty import Wechaty, Message, get_logger
+from wechaty.plugin import WechatyPlugin, WechatyPluginOptions
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import (
     Column,
     Integer,
     VARCHAR,
@@ -24,10 +24,10 @@ SUPPORTED_MESSAGE_FILE_TYPES: List[MessageType] = [
     MessageType.MESSAGE_TYPE_AUDIO
 ]
 
-Base = declarative_base()  # type: ignore
+Base: Any = declarative_base()
 
 
-class ChatHistory(Base):  # type: ignore
+class ChatHistory(Base):
     """ChatHistory"""
     __tablename__ = 'ChatHistory'
 
@@ -70,13 +70,13 @@ class ChatHistoryPlugin(WechatyPlugin):
     def name(self) -> str:
         return 'chat-history'
 
-    async def init_plugin(self, wechaty: Wechaty):
+    async def init_plugin(self, wechaty: Wechaty) -> None:
         """init plugin"""
         async_engine = create_async_engine(self.chat_history_database)
         async with async_engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
-    async def on_message(self, msg: Message):
+    async def on_message(self, msg: Message) -> None:
         """listen message event"""
         async_engine = create_async_engine(self.chat_history_database)
         async_session = sessionmaker(async_engine,

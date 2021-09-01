@@ -1,9 +1,9 @@
 """daily plugin bot examples"""
 import asyncio
 
-from wechaty import Wechaty  # type: ignore
+from wechaty import Wechaty
 
-from wechaty_puppet import (    # type: ignore
+from wechaty_puppet import (
     FileBox
 )
 
@@ -16,7 +16,7 @@ from wechaty_plugin_contrib import (
 from wechaty_plugin_contrib.matchers import ContactMatcher
 
 
-async def run():
+async def run() -> None:
     """async run method"""
     img_url = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy' \
               '/it/u=1257042014,3164688936&fm=26&gp=0.jpg'

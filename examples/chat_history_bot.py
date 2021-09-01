@@ -1,13 +1,13 @@
 """chat history plugin example"""
 import asyncio
-from wechaty import Wechaty  # type: ignore
-from wechaty_plugin_contrib import (  # type: ignore
+from wechaty import Wechaty
+from wechaty_plugin_contrib import (
     ChatHistoryPluginOptions,
     ChatHistoryPlugin
 )
 
 
-async def run():
+async def run() -> None:
     """
     async run method
     chat_history_path defines the path to save message file.

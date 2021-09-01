@@ -25,7 +25,7 @@ from dataclasses import (
 from enum import Enum
 from typing import Optional, List
 
-from wechaty import (   # type: ignore
+from wechaty import (
     WechatyPluginOptions
 )
 

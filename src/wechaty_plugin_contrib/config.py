@@ -1,14 +1,13 @@
 """import basic config from wechaty-puppet"""
 
-from wechaty import (   # type: ignore
+from wechaty import (
     Room,
     Contact,
     Message,
-
     Wechaty
 )
 
-from wechaty_puppet import get_logger   # type: ignore
+from wechaty_puppet import get_logger
 
 from .version import version
 

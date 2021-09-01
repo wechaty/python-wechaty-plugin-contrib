@@ -4,10 +4,10 @@ from typing import List, Optional, Union
 from dataclasses import dataclass, field
 import requests
 
-from wechaty import Message, Contact, Room, get_logger  # type: ignore
-from wechaty.exceptions import WechatyPluginError   # type: ignore
-from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
-from wechaty_grpc.wechaty.puppet import MessageType     # type: ignore
+from wechaty import Message, Contact, Room, get_logger
+from wechaty.exceptions import WechatyPluginError
+from wechaty.plugin import WechatyPlugin, WechatyPluginOptions
+from wechaty_grpc.wechaty.puppet import MessageType
 
 
 log = get_logger('DingDongPlugin')
@@ -40,11 +40,11 @@ class RasaRestPlugin(WechatyPlugin):
         self.conversation_ids: List[str] = options.conversation_ids if options else []
 
     @property
-    def name(self):
+    def name(self) -> str:
         """name of the plugin"""
         return 'rasa-rest-plugin'
 
-    async def on_message(self, msg: Message):
+    async def on_message(self, msg: Message) -> None:
         """listen message event"""
         talker = msg.talker()
         room = msg.room()

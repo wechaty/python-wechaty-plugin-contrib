@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import asyncio
-from wechaty import Wechaty  # type: ignore
+from wechaty import Wechaty
 
 from wechaty_plugin_contrib import (
     RasaRestPlugin,
@@ -10,7 +10,7 @@ from wechaty_plugin_contrib import (
 )
 
 
-async def run():
+async def run() -> None:
     """async run method"""
     options = RasaRestPluginOptions(
         endpoint='your-endpoint',
