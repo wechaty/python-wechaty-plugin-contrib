@@ -2,15 +2,14 @@
 import os
 from typing import Optional, List
 from dataclasses import dataclass, field
-from wechaty_puppet import MessageType  # type: ignore
-from wechaty import Message, get_logger  # type: ignore
+from wechaty_puppet import MessageType, FileBox  # type: ignore
+from wechaty import Wechaty, Message, get_logger  # type: ignore
 from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine  # type: ignore
+from sqlalchemy.orm import sessionmaker, declarative_base  # type: ignore
 from sqlalchemy import (  # type: ignore
     Column,
     Integer,
-    DateTime,
     VARCHAR,
     Text
 )
@@ -25,21 +24,23 @@ SUPPORTED_MESSAGE_FILE_TYPES: List[MessageType] = [
     MessageType.MESSAGE_TYPE_AUDIO
 ]
 
-Base = declarative_base()
+Base = declarative_base()  # type: ignore
 
 
-class ChatHistory(Base):
+class ChatHistory(Base):  # type: ignore
     """ChatHistory"""
     __tablename__ = 'ChatHistory'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     msg_id = Column(Integer, default=None)
-    msg_date = Column(DateTime, default=None)
-    msg_type = Column(Integer, default=None)
-    msg_room = Column(VARCHAR(50), default=None)
-    msg_talker = Column(VARCHAR(50), default=None)
-    msg_receiver = Column(VARCHAR(50), default=None)
-    msg_text = Column(Text, default=None)
+    filename = Column(Text, default=None)
+    text = Column(Text, default=None)
+    timestamp = Column(Integer, default=None)
+    type = Column(Integer, default=None)
+    from_id = Column(VARCHAR(50), default=None)
+    room_id = Column(VARCHAR(50), default=None)
+    to_id = Column(VARCHAR(50), default=None)
+    mention_ids = Column(Text, default=None)
 
 
 @dataclass
@@ -56,38 +57,48 @@ class ChatHistoryPlugin(WechatyPlugin):
 
     def __init__(self, options: Optional[ChatHistoryPluginOptions] = None):
         super().__init__(options)
+        if options is None:
+            options = ChatHistoryPluginOptions()
         if not options.chat_history_path:
             self.chat_history_path = os.path.join(os.getcwd(), 'chathistory')
         if not os.path.exists(self.chat_history_path):
             os.makedirs(self.chat_history_path)
-        if not options.chat_history_database:
-            self.chat_history_database = 'sqlite+aiosqlite:///chathistory.db'
-        else:
-            self.chat_history_database = options.chat_history_database
+        self.chat_history_database = options.chat_history_database \
+            or 'sqlite+aiosqlite:///chathistory.db'
 
     @property
     def name(self) -> str:
         return 'chat-history'
 
-    async def on_message(self, msg: Message):
-        """listen message event"""
+    async def init_plugin(self, wechaty: Wechaty):
+        """init plugin"""
         async_engine = create_async_engine(self.chat_history_database)
         async with async_engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
+
+    async def on_message(self, msg: Message):
+        """listen message event"""
+        async_engine = create_async_engine(self.chat_history_database)
         async_session = sessionmaker(async_engine,
                                      expire_on_commit=False,
                                      class_=AsyncSession)
         async with async_session() as session:
             async with session.begin():
+                file_box: FileBox = None
+                if msg.type() in SUPPORTED_MESSAGE_FILE_TYPES:
+                    file_box = await msg.to_file_box()
+                payload = msg.payload
                 chathistroy = ChatHistory(
                     msg_id=msg.message_id,
-                    msg_date=msg.date(),
-                    msg_type=msg.type(),
-                    msg_room=str(msg.room()) if msg.payload.room_id else None,
-                    msg_talker=str(
-                        msg.talker()) if msg.payload.from_id else None,
-                    msg_receiver=str(msg.to()) if msg.payload.to_id else None,
-                    msg_text=msg.text()
+                    filename=file_box.name if file_box else None,
+                    text=payload.text if payload.text else None,
+                    timestamp=payload.timestamp,
+                    type=payload.type,
+                    from_id=payload.from_id,
+                    room_id=payload.room_id if payload.room_id else None,
+                    to_id=payload.to_id if payload.to_id else None,
+                    mention_ids=','.join(
+                        payload.mention_ids) if payload.mention_ids else None
                 )
                 session.add(chathistroy)
             await session.commit()

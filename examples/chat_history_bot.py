@@ -11,7 +11,7 @@ async def run():
     """
     async run method
     chat_history_path defines the path to save message file.
-    For SQlite, chat_history_database="sqlite+aiosqlite:///chathistory.db" (Default)
+    For SQlite, chat_history_database="sqlite+aiosqlite:///chathistory.db"
     For MySQL, chat_history_database="mysql+aiomysql://user:password@hostname/database"
     For PostgreSQL, chat_history_database="postgresql+asyncpg://user:password@hostname/database"
     """
