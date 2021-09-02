@@ -108,7 +108,7 @@ class ChatHistoryPlugin(WechatyPlugin):
         if msg.type() in SUPPORTED_MESSAGE_FILE_TYPES:
             file_box = await msg.to_file_box()
             if file_box is not None:
-                filename = '-'.join(list(filter(None, [
+                filename = '-'.join(list(filter(lambda x: x is not None, [
                                     payload.room_id if payload.room_id else None,
                                     payload.from_id,
                                     str(payload.timestamp),
