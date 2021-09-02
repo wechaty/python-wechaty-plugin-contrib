@@ -60,7 +60,8 @@ class ChatHistoryPlugin(WechatyPlugin):
         if options is None:
             options = ChatHistoryPluginOptions()
         if not options.chat_history_path:
-            self.chat_history_path = os.path.join(os.getcwd(), 'chathistory')
+            self.chat_history_path = os.path.join(
+                os.getcwd(), 'wechaty/chathistory')
         if not os.path.exists(self.chat_history_path):
             os.makedirs(self.chat_history_path)
         self.chat_history_database = options.chat_history_database \
@@ -107,4 +108,10 @@ class ChatHistoryPlugin(WechatyPlugin):
         if msg.type() in SUPPORTED_MESSAGE_FILE_TYPES:
             file_box = await msg.to_file_box()
             if file_box is not None:
-                await file_box.to_file(os.path.join(self.chat_history_path, file_box.name))
+                filename = '-'.join(list(filter(None, [
+                                    payload.room_id if payload.room_id else None,
+                                    payload.from_id,
+                                    str(payload.timestamp),
+                                    file_box.name]
+                )))
+                await file_box.to_file(os.path.join(self.chat_history_path, filename))
