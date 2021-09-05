@@ -2,7 +2,7 @@
 import os
 
 
-def _get_version():
+def _get_version() -> str:
     file_path = os.path.join('../../', 'VERSION')
     if not os.path.exists(file_path):
         return '0.0.0'

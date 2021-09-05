@@ -4,7 +4,7 @@ from re import Pattern
 import inspect
 from typing import List
 
-from wechaty import Wechaty # type: ignore
+from wechaty import Wechaty
 
 from wechaty_plugin_contrib.config import (
     get_logger,

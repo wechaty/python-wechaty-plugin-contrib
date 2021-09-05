@@ -2,10 +2,10 @@
 plugin validator
 """
 from __future__ import annotations
-from wechaty import WechatyPlugin   # type: ignore
+from wechaty import WechatyPlugin
 
 
-def validate_plugin(plugin: WechatyPlugin):
+def validate_plugin(plugin: WechatyPlugin) -> None:
     """validate the plugin"""
     # check the name of the plugin
     if isinstance(plugin, WechatyPlugin):

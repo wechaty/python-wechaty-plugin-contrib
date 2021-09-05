@@ -12,7 +12,7 @@ from wechaty_plugin_contrib.config import (
     Message
 )
 
-from wechaty import Wechaty # type: ignore
+from wechaty import Wechaty
 
 FinderOption = Union[
     str, Pattern, bool,

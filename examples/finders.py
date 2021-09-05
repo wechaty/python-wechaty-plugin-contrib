@@ -1,10 +1,10 @@
 """Example of Finders"""
 from __future__ import annotations
 from typing import List
-from wechaty import Wechaty     # type: ignore
-from wechaty.user.contact import Contact    # type: ignore
-from wechaty.user.room import Room  # type: ignore
-from wechaty_puppet.schemas.room import RoomQueryFilter     # type: ignore
+from wechaty import Wechaty
+from wechaty.user.contact import Contact
+from wechaty.user.room import Room
+from wechaty_puppet.schemas.room import RoomQueryFilter
 from wechaty_plugin_contrib import (
     RoomFinder,
     FinderOption,

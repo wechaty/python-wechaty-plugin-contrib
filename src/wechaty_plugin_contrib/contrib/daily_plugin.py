@@ -1,13 +1,13 @@
 """daily plugin"""
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional, Union, List, Any
+from typing import Optional, Union, List, Any, Callable
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler     # type: ignore
-from apscheduler.schedulers.base import BaseScheduler   # type: ignore
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.base import BaseScheduler
 
-from wechaty import Wechaty, get_logger, Room, Contact      # type: ignore
-from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
+from wechaty import Wechaty, get_logger, Room, Contact
+from wechaty.plugin import WechatyPlugin, WechatyPluginOptions
 
 
 log = get_logger('DailyPlugin')
@@ -21,12 +21,14 @@ class DailyPluginOptions(WechatyPluginOptions):
     trigger: Optional[str] = None
     kwargs: Optional[dict] = None
     msg: Optional[str] = None
+    name: Optional[str] = None
 
 
 class DailyPlugin(WechatyPlugin):
     """
     say something everyday, like `Daily Words`
     """
+
     def __init__(self, options: DailyPluginOptions):
         super().__init__(options)
 
@@ -53,7 +55,7 @@ class DailyPlugin(WechatyPlugin):
             return 'daily'
         return self.options.name
 
-    async def tick(self, msg: str):
+    async def tick(self, msg: str) -> None:
         """tick the things """
         print(msg)
         conversation: Union[Room, Contact]
@@ -67,17 +69,17 @@ class DailyPlugin(WechatyPlugin):
         await conversation.ready()
         await conversation.say(msg)
 
-    async def init_plugin(self, wechaty: Wechaty):
+    async def init_plugin(self, wechaty: Wechaty) -> None:
         """init plugin"""
         await super().init_plugin(wechaty)
         for job in self._scheduler_jobs:
             job(wechaty)
         self.scheduler.start()
 
-    def add_interval_job(self, func):
+    def add_interval_job(self, func: Callable) -> None:
         """add interval job"""
 
-        def add_job(bot: Wechaty):
+        def add_job(bot: Wechaty) -> None:
             self.scheduler.add_job(
                 func,
                 trigger='interval',

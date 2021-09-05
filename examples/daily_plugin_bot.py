@@ -2,8 +2,8 @@
 import asyncio
 from datetime import datetime
 
-from wechaty import Wechaty  # type: ignore
-from wechaty_puppet import RoomQueryFilter  # type: ignore
+from wechaty import Wechaty
+from wechaty_puppet import RoomQueryFilter
 
 from wechaty_plugin_contrib import (
     DailyPluginOptions,
@@ -12,14 +12,14 @@ from wechaty_plugin_contrib import (
 )
 
 
-async def say_hello(bot: Wechaty):
+async def say_hello(bot: Wechaty) -> None:
     """say hello to the room"""
     room = await bot.Room.find(query=RoomQueryFilter(topic='小群，小群1'))
     if room:
         await room.say(f'hello bupt ... {datetime.now()}')
 
 
-async def run():
+async def run() -> None:
     """async run method"""
     morning_plugin = DailyPlugin(DailyPluginOptions(
         name='girl-friend-bot-morning',

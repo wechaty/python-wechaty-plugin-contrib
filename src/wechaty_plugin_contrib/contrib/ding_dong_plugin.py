@@ -1,8 +1,8 @@
 """basic ding-dong bot for the wechaty plugin"""
 from typing import List, Optional, Union
 from dataclasses import dataclass, field
-from wechaty import Message, Contact, Room, get_logger  # type: ignore
-from wechaty.plugin import WechatyPlugin, WechatyPluginOptions  # type: ignore
+from wechaty import Message, Contact, Room, get_logger
+from wechaty.plugin import WechatyPlugin, WechatyPluginOptions
 
 
 log = get_logger('DingDongPlugin')
@@ -33,11 +33,11 @@ class DingDongPlugin(WechatyPlugin):
         self.options = options
 
     @property
-    def name(self):
+    def name(self) -> str:
         """name of the plugin"""
         return 'ding-dong'
 
-    def can_send_dong(self, conversation_id: str):
+    def can_send_dong(self, conversation_id: str) -> bool:
         """check if the bot can send dong message"""
         if self.options is None:
             return True
@@ -53,7 +53,7 @@ class DingDongPlugin(WechatyPlugin):
                 return True
         return False
 
-    async def on_message(self, msg: Message):
+    async def on_message(self, msg: Message) -> None:
         """listen message event"""
         from_contact = msg.talker()
         text = msg.text()
