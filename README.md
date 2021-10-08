@@ -31,16 +31,15 @@ You are welcome to send your plugin to our contrib by creating a Pull Request!
 | # | Plugin | Author | Feature |
 | :--- | :--- | :--- | :--- |
 | 1 | DingDong | [@wj-Mcat](https://github.com/wj-Mcat) | Reply `dong` if bot receives a `ding` message. |
-| 2 | DailyWords | [@markoxu](https://github.com/markoxu) | Say something everyday, like `Daily Words`. |
-| 3 | Rasa_Rest | [@markoxu](https://github.com/markoxu) | Rasa server channnel connector. |
+| 2 | DailyWords | [@wj-Mcat](https://github.com/wj-Mcat) | Say something everyday, like `Daily Words`. |
+| 3 | Rasa_Rest | [@wj-Mcat](https://github.com/wj-Mcat) | Rasa server channnel connector. |
 | 4 | Scheduler | [@wj-Mcat](https://github.com/wj-Mcat) | Say something everyday, like `Scheduler Words`. |
-| 5 | Room_inviter | [@markoxu](https://github.com/markoxu) | Invite peaple to room according keywords and rules then say hello words. |
-| 6 | Auto_reply | [@markoxu](https://github.com/markoxu) | AutoReply according keywords. |
+| 5 | Room_inviter | [@wj-Mcat](https://github.com/wj-Mcat) | Invite peaple to room according keywords and rules then say hello words. |
+| 6 | Auto_reply | [@wj-Mcat](https://github.com/wj-Mcat) | AutoReply according keywords. |
 | 7 | Chat_history | [@markoxu](https://github.com/markoxu) | Save chat history with files and database. |
-| 8 | Github_webhook | [@wj-Mcat](https://github.com/wj-Mcat)| Github webhook, hook infomation to peaple or room when projects were updated. |
+| 8 | Github_webhook | [@wj-Mcat](https://github.com/wj-Mcat) | Github webhook, hook infomation to peaple or room when projects were updated. |
 | 9 | GitlabEvent | [@wj-Mcat](https://github.com/wj-Mcat) | Gitlab webhook, send gitlab event infomation to peaple or room when projects were updated. |
 | 10 | Finders | [@wj-Mcat](https://github.com/wj-Mcat) | Example code How to find room or contact, then do something. |
-| 12 | Use_two_plugins | [@xinyu3ru](https://github.com/xinyu3ru) | Example code How to use two or more plugins. |
 
 
 ### 1 DingDong
@@ -56,13 +55,13 @@ bot.use(DingDongPlugin())
 ```
 
 ### 2 DailyWords
-- Author: [@markoxu](https://github.com/markoxu)
+- Author: [@wj-Mcat](https://github.com/wj-Mcat)
 - Description:Say something everyday, like `Daily Words`. 
 
 Example code in examples folder, [daily_plugin_bot](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/examples/daily_plugin_bot.py)
 
 ### 3 Rasa_Rest
-- Author: [@markoxu](https://github.com/markoxu)
+- Author: [@wj-Mcat](https://github.com/wj-Mcat)
 - Description:Rasa server channnel connector. 
 
 Example code in examples folder, [rasa_plugin_bot](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/examples/rasa_plugin_bot.py)
@@ -78,7 +77,7 @@ bot.use(SchedulerPlugin())
 ```
 
 ### 5 Room_inviter
-- Author: [@markoxu](https://github.com/markoxu)
+- Author: [@wj-Mcat](https://github.com/wj-Mcat)
 - Description: Invite peaple to room according keywords and rules then say hello words.
 
 ```python
@@ -96,11 +95,11 @@ room_inviter_plugin = RoomInviterPlugin(options=RoomInviterOptions(
     welcome = 'welcome join our group.'
 ))
 
-bot.use(RoomInviterPlugin())
+bot.use([RoomInviterPlugin()])
 ```
 
 ### 6 Auto_reply
-- Author: [@markoxu](https://github.com/markoxu)
+- Author: [@wj-Mcat](https://github.com/wj-Mcat)
 - Description: AutoReply according keywords. |
 
 Example code in examples folder, [auto-reply-bot](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/examples/auto-reply-bot.py)
@@ -139,11 +138,6 @@ bot.use(GitlabEventPlugin())
 Example code in examples folder, [Example of Finders](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/examples/finders.py)
 
 
-### 12 Use_two_plugins
-- Author: [@xinyu3ru](https://github.com/xinyu3ru)
-- Description: Example code How to use two or more plugins. 
-
-Example code in examples folder, [use_two_plugins](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/examples/use_two_plugins.py)
 
 
 
@@ -168,7 +162,7 @@ We are listing those powerful Wechaty Plugins outside the contrib as in the foll
 
 The `python-wechaty-plugin-contrib` project has at least 9 plugins and 6 code examples.
 
-It makes wechaty easier to use.
+It makes python-wechaty easier to use.
 
 ### v0.0.1 (Apr 2020)
 
@@ -178,7 +172,10 @@ The `python-wechaty-plugin-contrib` project was created.
 
 - @wj-Mcat - [wj-Mcat](https://github.com/wj-Mcat), nlp researcher
 - @huan - [Huan LI](https://github.com/huan) ([李卓桓](http://linkedin.com/in/zixia)), Tencent TVP of Chatbot
+
+## Contributors
 - @markoxu - [@markoxu](https://github.com/markoxu), Software Development Engineer at Intel Corporation.
+- @lyleshaw - [@lyleshaw](https://github.com/lyleshaw), A HDU student, Author of [python-wechaty-puppet-itchat](https://github.com/wechaty/python-wechaty-puppet-itchat).
 
 ## Copyright & License
 
