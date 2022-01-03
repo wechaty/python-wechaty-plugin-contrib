@@ -25,5 +25,5 @@ class Matcher:
         else:
             self.options = [option]
 
-    async def match(self, target) -> bool:
+    async def match(self, target: Union[Contact, Room, Message]) -> bool:
         raise NotImplementedError

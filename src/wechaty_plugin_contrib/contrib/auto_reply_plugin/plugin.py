@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import Union, List, Dict
 
-from wechaty import (  # type: ignore
+from wechaty import (
     WechatyPlugin,
     WechatyPluginOptions,
     FileBox,
@@ -12,7 +12,7 @@ from wechaty import (  # type: ignore
     MiniProgram
 )
 
-from wechaty_puppet import (    # type: ignore
+from wechaty_puppet import (
     get_logger,
 )
 
@@ -77,7 +77,7 @@ class AutoReplyPlugin(WechatyPlugin):
             raise TypeError(f'{self} is not AutoReplyOptions type')
         return self.options.matchers
 
-    async def is_match(self, target: Union[Contact, Message, Room]):
+    async def is_match(self, target: Union[Contact, Message, Room]) -> bool:
         """if there is only one rule which match the target, return True"""
         for option in self.matcher_options:
             _is_match = await option.match(target)
@@ -85,7 +85,7 @@ class AutoReplyPlugin(WechatyPlugin):
                 return True
         return False
 
-    async def on_message(self, msg: Message):
+    async def on_message(self, msg: Message) -> None:
         """check the keyword and reply to talker"""
 
         conversation: Union[Room, Contact] = msg.room() if msg.room() else msg.talker()

@@ -1,3 +1,5 @@
 wechaty>=0.5.dev1
 jieba
 aiohttp
+requests
+sqlalchemy

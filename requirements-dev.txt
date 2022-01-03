@@ -15,4 +15,5 @@ pytest-asyncio
 pytest-trio
 pytest-tornasync
 pytest-twisted
+types-requests
 twisted

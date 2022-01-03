@@ -1,4 +1,6 @@
 """Room Finder to match the specific Room"""
+from __future__ import annotations
+
 import re
 from re import Pattern
 import inspect
@@ -7,7 +9,6 @@ from typing import List
 from wechaty_plugin_contrib.config import (
     get_logger,
     Room,
-
     Wechaty
 )
 
@@ -18,6 +19,7 @@ logger = get_logger("RoomFinder")
 
 
 class RoomFinder(Finder):
+    """Room Finder can find rooms"""
     async def match(self, wechaty: Wechaty) -> List[Room]:
         """match the room"""
         logger.info(f'RoomFinder match({Wechaty})')
@@ -39,17 +41,18 @@ class RoomFinder(Finder):
                 room = wechaty.Room.load(option)
                 await room.ready()
                 rooms.append(room)
-            elif hasattr(option, '__call__'):
-                """check the type of the function
-                refer: https://stackoverflow.com/a/56240578/6894382
-                """
-                if inspect.iscoroutinefunction(option):
-                    # pytype: disable=bad-return-type
-                    targets = await option(wechaty)
-                else:
-                    targets = option(wechaty)
-                if isinstance(targets, List[Room]):
-                    rooms.extend(targets)
+            # TODO: implement callback function to find rooms
+            # elif hasattr(option, '__call__'):
+            #     """check the type of the function
+            #     refer: https://stackoverflow.com/a/56240578/6894382
+            #     """
+            #     if inspect.iscoroutinefunction(option):
+            #         # pytype: disable=bad-return-type
+            #         targets = await option(wechaty)
+            #     else:
+            #         targets = option(wechaty)
+            #     if isinstance(targets, List[Room]):
+            #         rooms.extend(targets)
             else:
                 raise ValueError(f'unknown type option: {option}')
         return rooms
