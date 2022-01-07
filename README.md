@@ -29,8 +29,11 @@ This package is for publishing the Wechaty Plugins that are very common used by 
 You are welcome to send your plugin to our contrib by creating a Pull Request!
 
 | # | Plugin | Author | Feature |
-| :--- | :--- | :--- | :--- |
+| :-- | :--- | :--- | :--- |
 | 1 | DingDong | [@wj-Mcat](https://github.com/wj-Mcat) | Reply `dong` if bot receives a `ding` message. |
+| 2 | HealthCheck | [@wj-Mcat](https://github.com/wj-Mcat) | Health checker, amis to keep wechaty bot alive at lifetime |
+| 3 | RasaRest | [@wj-Mcat](https://github.com/wj-Mcat) | Connect to the Rasa V2 Server, make wechaty bot more intelligent |
+| 4 | Scheduler | [@wj-Mcat](https://github.com/wj-Mcat) | Help you schedule the jobs on wechaty bot |
 
 
 ### 1 DingDong
@@ -43,6 +46,10 @@ from wechaty_plugin_contrib import DingDongPlugin
 
 bot.use(DingDongPlugin())
 ```
+
+### 2. HealthCheck
+
+This plugin help to 
 
 
 ## Python Wechaty Plugin Directory

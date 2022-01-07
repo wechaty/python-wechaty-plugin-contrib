@@ -17,5 +17,6 @@ def validate_plugin(plugin: WechatyPlugin) -> None:
 
     class_name = type(plugin).__name__
     if not class_name.endswith('Plugin'):
-        raise Exception('the name of plugin <%s> should follow the Rule: '
-                        'NamePlugin' % class_name)
+        raise Exception(
+            f'the name of plugin <%{class_name}> should follow the Rule: NamePlugin'
+        )
