@@ -16,3 +16,12 @@ module = [
     "wechaty_grpc.wechaty.puppet.*"
 ]
 ignore_missing_imports = true
+
+
+# refer to: https://docs.pytest.org/en/stable/mark.html
+[tool.pytest.ini_options]
+pythonpath = "src"
+minversion = "6.0"
+testpaths = [
+    "tests"
+]
