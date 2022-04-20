@@ -1,7 +1,7 @@
 """import all contrib"""
 
 # Finder & Matcher
-from wechaty_plugin_contrib.finders.finder import FinderOptions, FinderOption
+from wechaty_plugin_contrib.finders.finder import FinderOption
 from wechaty_plugin_contrib.finders.contact_finder import ContactFinder
 from wechaty_plugin_contrib.finders.room_finder import RoomFinder
 
@@ -38,7 +38,6 @@ from wechaty_plugin_contrib.contrib.chat_history_plugin import (
 )
 
 __all__ = [
-    'FinderOptions',
     'FinderOption',
 
     'ContactFinder',

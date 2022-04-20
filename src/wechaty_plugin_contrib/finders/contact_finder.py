@@ -50,7 +50,6 @@ class ContactFinder(Finder):
             #         # pytype: disable=bad-return-type
             #         targets = await option(wechaty)
             #     else:
-            #         targets = option(wechaty)
             #
             #     if isinstance(targets, List[Contact]):
             #         contacts.extend(targets)

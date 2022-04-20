@@ -19,15 +19,18 @@ FinderOption = Union[
     Callable[[Union[Contact, Room, Message]], List[Union[Room, Contact]]],
     Callable[[Any], Coroutine[Any, Any, List[Any]]]
 ]
-FinderOptions = Union[FinderOption, List[FinderOption]]
 
 
 class Finder:
-    def __init__(self, option: FinderOptions):
+    """Base Abstract Finder"""
+    def __init__(self, option: Union[FinderOption, List[FinderOption]], strict: bool = True):
         if isinstance(option, list):
             self.options = option
         else:
             self.options = [option]
+        
+        self.strict: bool = strict
 
     async def match(self, bot: Wechaty) -> List[Any]:
+        """find the matched item, eg: Room, Contact, Message"""
         raise NotImplementedError

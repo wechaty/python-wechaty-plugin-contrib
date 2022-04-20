@@ -83,6 +83,7 @@ class ChatHistoryPlugin(WechatyPlugin):
         async_session = sessionmaker(async_engine,
                                      expire_on_commit=False,
                                      class_=AsyncSession)
+
         async with async_session() as session:
             async with session.begin():
                 file_box: FileBox = None
