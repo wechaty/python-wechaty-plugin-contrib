@@ -7,6 +7,7 @@ from faker import Faker
 
 from wechaty import Room, Wechaty, WechatyOptions
 from wechaty_puppet import Puppet, PuppetOptions, RoomPayload
+
 from wechaty_plugin_contrib.finders.room_finder import RoomFinder
 from ..conftest import FakePuppet
 
@@ -60,9 +61,17 @@ async def test_simple_room_finder(bot: Wechaty) -> None:
 
 
 @pytest.mark.asyncio
-async def test_room_finder(bot: Wechaty) -> None:
+async def test_room_finder_with_pattern(bot: Wechaty) -> None:
     """test room finder"""
     option = re.compile(r'^Wechaty Chatroom #(\d+)$')
     room_finder: RoomFinder = RoomFinder(option)
     rooms: List[Room] = await room_finder.match(bot)
     assert len(rooms) == 100
+
+
+@pytest.mark.asyncio
+async def test_room_finder_with_string(bot: Wechaty) -> None:
+    """test room finder"""
+    room_finder: RoomFinder = RoomFinder('Wechaty Chatroom #1')
+    rooms: List[Room] = await room_finder.match(bot)
+    assert len(rooms) == 1

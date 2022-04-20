@@ -1,13 +1,8 @@
-import sys
-from os.path import abspath, dirname, join
-
 from typing import Dict, List, MutableMapping, Optional, Tuple
 from uuid import uuid4
-import pytest
 from wechaty_grpc.wechaty.puppet import MessageType
 from wechaty_puppet.puppet import Puppet
 from wechaty_puppet.schemas.message import MessageQueryFilter
-from wechaty_puppet.schemas.room import RoomQueryFilter
 from wechaty_puppet.schemas.types import (
     MessagePayload,
     RoomPayload,
