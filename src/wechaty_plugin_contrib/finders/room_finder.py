@@ -61,11 +61,10 @@ class RoomFinder(Finder):
         logger.info(f'RoomFinder match({Wechaty})')
 
         room_map: Dict[str, Room] = {}
-        
         # 1. load all of room data
         all_rooms: List[Room] = await bot.Room.find_all()
         for room in all_rooms:
-            await room.ready()
+            await room.ready()        
 
         # 2. search rooms with options
         for option in self.options:
