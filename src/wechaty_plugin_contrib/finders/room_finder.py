@@ -4,7 +4,7 @@ from __future__ import annotations
 from uuid import uuid4
 import re
 from re import L, Pattern
-from typing import List
+from typing import Dict, List
 import inspect
 
 from wechaty_plugin_contrib.config import (
@@ -60,8 +60,7 @@ class RoomFinder(Finder):
         """        
         logger.info(f'RoomFinder match({Wechaty})')
 
-        rooms: List[Room] = []
-        
+        room_map: Dict[str, Room] = {}
         # 1. load all of room data
         all_rooms: List[Room] = await bot.Room.find_all()
         for room in all_rooms:
@@ -77,28 +76,28 @@ class RoomFinder(Finder):
                 for room in all_rooms:
                     topic = await room.topic()
                     if re.match(option, topic):
-                        rooms.append(room)
+                        room_map[room.room_id] = room
 
             elif isinstance(option, str):
                 for room in all_rooms:
                     is_match = await _is_match_with_str(room, option, self.strict)
                     if is_match:
-                        rooms.append(room)
+                        room_map[room.room_id] = room
             elif inspect.isfunction(option):
 
                 # check the type of the function refer: https://stackoverflow.com/a/56240578/6894382
                 if inspect.iscoroutinefunction(option):
                     # pytype: disable=bad-return-type
-                    targets = await option(bot)
+                    rooms = await option(bot)
                 else:
-                    targets = option(bot)
-                
-                if isinstance(targets, list):
-                    rooms.extend(targets)
-                elif isinstance(targets, Room):
-                    rooms.append(targets)
-                else:
-                    raise ValueError(f'unknown value type: {targets}, which is expected to: Room/List[Room]')
+                    rooms = option(bot)
+
+                if isinstance(rooms, Room):
+                    rooms = [rooms]
+
+                for room in rooms:
+                    room_map[room.room_id] = room
+
             else:
                 raise ValueError(f'unknown type option: {option}')
-        return rooms
+        return list(room_map.values())
