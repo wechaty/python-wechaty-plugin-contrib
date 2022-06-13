@@ -70,6 +70,17 @@ async def test_room_finder_with_pattern(bot: Wechaty) -> None:
 
 
 @pytest.mark.asyncio
+async def test_room_finder_with_patterns(bot: Wechaty) -> None:
+    """test room finder"""
+    option = re.compile(r'^Wechaty Chatroom #(\d+)$')
+    room_finder: RoomFinder = RoomFinder(
+        [option, option]
+    )
+    rooms: List[Room] = await room_finder.match(bot)
+    assert len(rooms) == 100
+
+
+@pytest.mark.asyncio
 async def test_room_finder_with_string(bot: Wechaty) -> None:
     """test room finder"""
     room_finder: RoomFinder = RoomFinder('Wechaty Chatroom #1')
