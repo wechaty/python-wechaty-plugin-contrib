@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 from typing import Dict, List, Optional, Union
 import functools
 from copy import deepcopy
@@ -16,7 +17,8 @@ class MessageController:
         self.ids = set()
         self.plugin_names: List[str] = []
         self.disabled_plugins: Dict[str, List[str]] = {}
-
+            
+        os.makedirs('.wechaty', exist_ok=True)
         self.logger = get_logger("MessageController", file='.wechaty/message_controller.log')
     
     def exist(self, message_id: str) -> bool:
