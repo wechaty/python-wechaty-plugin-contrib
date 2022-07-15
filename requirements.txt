@@ -3,3 +3,4 @@ jieba
 aiohttp
 requests
 sqlalchemy
+apscheduler
