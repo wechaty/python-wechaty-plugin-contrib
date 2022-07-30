@@ -24,13 +24,6 @@ page_dir = os.path.join(os.path.dirname(__file__), 'pages')
 class InfoLoggerPlugin(WechatyPlugin):
     """log all of Contacts/Rooms info as excel file"""
 
-    def __init__(self, options: Optional[WechatyPluginOptions] = None):
-        super().__init__(options)
-
-        self.cache_dir = os.path.join('.wechaty', self.name)
-        os.makedirs(self.cache_dir, exist_ok=True)
-        self.logger = get_logger(self.name, f'{self.cache_dir}/log.log')
-
     async def get_contacts_infos(self, is_friend: Optional[bool] == None):
         """load all of contact info into csv file format"""
         contacts: List[Contact] = await self.bot.Contact.find_all()
@@ -90,7 +83,7 @@ class InfoLoggerPlugin(WechatyPlugin):
             for contact in contacts:
                 self.logger.info(contact)
             self.logger.info('===========================all contacts===========================')
-            message_controller.disable_all_plugins()
+            message_controller.disable_all_plugins(msg)
         elif msg.text() == '#log-all-rooms':
             self.logger.info('===========================all rooms===========================')
             rooms = await self.get_room_infos()
@@ -102,5 +95,5 @@ class InfoLoggerPlugin(WechatyPlugin):
             self.logger.info('===========================all rooms===========================')
             
             await msg.talker().say('\n'.join(names))
-            message_controller.disable_all_plugins()
+            message_controller.disable_all_plugins(msg)
 
