@@ -1,21 +1,14 @@
-name: docs
-on:
-  push:
-    paths:
-      - 'doc/**'
+name: CI
+on: [push]
+
 jobs:
-  gh-push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: webfactory/ssh-agent@v0.5.0
+      - uses: actions/checkout@master
+      - uses: redkubes/docusaurus-deploy-action@v1
         with:
-          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
-      - name: Push to GitHub Repo
-        uses: sunny0826/auto-docs-action
-        env:
-          USE_SSH: true
-          GIT_USER: git
-          DEPLOYMENT_BRANCH: gh-pages
-        with:
-          gh-page: git@github.com:wechaty/python-wechaty-plugin-contrib.git
+          source-folder: website
+          git-user: $SOME_USERNAME
+          git-password: ${{ secrets.GITHUB_TOKEN }}
+          deployment-branch: gh-pages
