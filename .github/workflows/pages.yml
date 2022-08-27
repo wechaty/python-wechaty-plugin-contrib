@@ -5,6 +5,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["master"]
+    paths:
+      - 'doc/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,15 +29,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - uses: webfactory/ssh-agent@v0.5.0
         with:
-          source: ./
-          destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
+      - name: Push to GitHub Repo
+        uses: sunny0826/auto-docs-action
+        env:
+          USE_SSH: true
+          GIT_USER: git
+          DEPLOYMENT_BRANCH: gh-pages
+        with:
+          gh-page: git@github.com:wechaty/python-wechaty-plugin-contrib.git
 
   # Deployment job
   deploy:
