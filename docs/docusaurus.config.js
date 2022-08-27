@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Python Wechaty Plugin Contrib',
   tagline: 'Dinosaurs are cool',
-  url: 'https://wechaty.github.io/python-wechaty-plugin-contrib/',
-  baseUrl: '/python-wechaty-plugin-contrib',
+  url: 'https://wechaty.github.io/python-wechaty-plugin-contrib',
+  baseUrl: '/python-wechaty-plugin-contrib/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
