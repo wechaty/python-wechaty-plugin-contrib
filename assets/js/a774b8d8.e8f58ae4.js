@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[917],{9422:a=>{a.exports=JSON.parse('{"label":"facebook","permalink":"/python-wechaty-plugin-contrib/blog/tags/facebook","allTagsPath":"/python-wechaty-plugin-contrib/blog/tags","count":1}')}}]);
