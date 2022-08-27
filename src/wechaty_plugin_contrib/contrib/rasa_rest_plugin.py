@@ -22,7 +22,7 @@ class RasaRestPluginOptions(WechatyPluginOptions):
 
 
 class RasaRestPlugin(WechatyPlugin):
-    """rasa server channnel connector"""
+    """rasa server channnel connector: it can call the service of rasa nlu server, and return the result of nlu which is important"""
     def __init__(self, options: Optional[RasaRestPluginOptions] = None):
         super().__init__(options)
         if not options or not options.endpoint:

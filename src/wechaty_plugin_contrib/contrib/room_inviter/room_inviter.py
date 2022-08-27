@@ -1,6 +1,5 @@
 """AutoReply to someone according to keywords"""
 from dataclasses import dataclass, field
-from datetime import datetime
 from collections import defaultdict
 from typing import Union, List, Dict, Optional
 
@@ -19,7 +18,7 @@ from wechaty_puppet import (
 from wechaty_plugin_contrib.matchers import (
     Matcher,
     MatcherOptions,
-    MatcherOption, RoomMatcher, MessageMatcher, ContactMatcher
+    MatcherOption, RoomMatcher, MessageMatcher
 )
 
 from wechaty_plugin_contrib.exception import (

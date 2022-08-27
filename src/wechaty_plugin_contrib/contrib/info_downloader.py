@@ -19,15 +19,11 @@ logger = get_logger('InfoDownloaderPlugin', file='.wechaty/info_downloader_plugi
 
 
 class InfoDownloaderPlugin(WechatyPlugin):
-    """Download all of Contacts/Rooms info as excel file
-
+    """Download all of Contacts/Rooms info into excel file, and you can download it throught the url: `/api/plugins/info_download`
     """
 
     def __init__(self, options: Optional[WechatyPluginOptions] = None):
         super().__init__(options)
-
-        self.cache_dir = '.wechaty/info_downloader'
-        os.makedirs(self.cache_dir, exist_ok=True)
 
         self._check_dependency_packages()
 
@@ -88,8 +84,7 @@ class InfoDownloaderPlugin(WechatyPlugin):
         return infos
 
     async def blueprint(self, app: Quart) -> None:
-
-        @app.route('/info/download')
+        @app.route('/api/plugins/info_download')
         async def info_download():
             # 1. gen the excel file
             contact_infos = await self.get_contacts_infos()

@@ -22,7 +22,7 @@ page_dir = os.path.join(os.path.dirname(__file__), 'pages')
 
 
 class InfoLoggerPlugin(WechatyPlugin):
-    """log all of Contacts/Rooms info as excel file"""
+    """log all of Contacts/Rooms info with logger which can be saved into log file"""
 
     async def get_contacts_infos(self, is_friend: Optional[bool] == None):
         """load all of contact info into csv file format"""
@@ -87,13 +87,7 @@ class InfoLoggerPlugin(WechatyPlugin):
         elif msg.text() == '#log-all-rooms':
             self.logger.info('===========================all rooms===========================')
             rooms = await self.get_room_infos()
-            
-            names = []
             for room in rooms:
                 self.logger.info(room)
-                names.append(room.name)
             self.logger.info('===========================all rooms===========================')
-            
-            await msg.talker().say('\n'.join(names))
             message_controller.disable_all_plugins(msg)
-
