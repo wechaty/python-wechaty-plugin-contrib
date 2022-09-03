@@ -96,7 +96,6 @@ class AutoReplyPlugin(WechatyPlugin):
         # find the match rules
         for matcher, rules in self.rule_map.items():
             is_match = await matcher.match(conversation)
-
             if is_match:
                 for rule in rules:
                     if rule.keyword == text:

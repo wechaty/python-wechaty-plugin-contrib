@@ -10,32 +10,31 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Plugin System',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        插件系统能够让开发者实现不同功能之间的完全隔离性。
+        <br />
+        高内聚，低耦合。
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Wechaty UI',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        新版本<code>Wechaty UI</code>能够让开发者用少量的代码即可开发出能够独立运行的UI界面，简单快速。
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Plugin Contrib',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        插件库当中有很多官方支持和系统内置的插件列表，同时也欢迎各位开发者来贡献自己的插件。
       </>
     ),
   },

@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Python Wechaty Plugin Contrib',
-  tagline: 'Dinosaurs are cool',
+  title: 'Python Wechaty 插件仓库',
+  tagline: '开箱即用',
   url: 'https://wechaty.github.io/python-wechaty-plugin-contrib',
   baseUrl: '/python-wechaty-plugin-contrib/',
   onBrokenLinks: 'throw',
@@ -57,9 +57,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'Python Wechaty Plugin Contrib',
         logo: {
-          alt: 'My Site Logo',
+          alt: '插件',
           src: 'img/logo.svg',
         },
         items: [
@@ -67,11 +67,11 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: '文档',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/blog', label: '博客', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/wechaty/python-wechaty-plugin-contrib',
             label: 'GitHub',
             position: 'right',
           },
@@ -93,17 +93,13 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Python Wechaty',
+                href: 'http://github.com/wechaty/python-wechaty',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
+                label: 'Python Wechaty Doc',
+                href: 'https://wechaty.readthedocs.io/zh_CN/latest/',
+              }
             ],
           },
           {
@@ -113,14 +109,10 @@ const config = {
                 label: 'Blog',
                 to: '/blog',
               },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Wechaty, Community. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

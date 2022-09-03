@@ -7,10 +7,6 @@ from wechaty_plugin_contrib.finders.room_finder import RoomFinder
 
 # Plugin List
 from wechaty_plugin_contrib.contrib.ding_dong_plugin import DingDongPlugin
-from wechaty_plugin_contrib.contrib.daily_plugin import (
-    DailyPluginOptions,
-    DailyPlugin
-)
 from wechaty_plugin_contrib.contrib.auto_reply_plugin import (
     AutoReplyOptions, AutoReplyPlugin,
     AutoReplyRule
@@ -37,6 +33,8 @@ from wechaty_plugin_contrib.contrib.chat_history_plugin import (
     ChatHistoryPlugin
 )
 
+from wechaty_plugin_contrib.contrib.info_logger import InfoLoggerPlugin
+
 __all__ = [
     'FinderOption',
 
@@ -44,9 +42,6 @@ __all__ = [
     'RoomFinder',
 
     'DingDongPlugin',
-
-    'DailyPluginOptions',
-    'DailyPlugin',
 
     'RasaRestPluginOptions',
     'RasaRestPlugin',
@@ -66,6 +61,7 @@ __all__ = [
     'RoomInviterPlugin',
 
     'ChatHistoryPluginOptions',
-    'ChatHistoryPlugin'
+    'ChatHistoryPlugin',
 
+    'InfoLoggerPlugin'
 ]
