@@ -1,6 +1,7 @@
 ---
 title: "使用插件"
 sidebar_position: 1
+author: wj-Mcat
 ---
 
 # 使用插件

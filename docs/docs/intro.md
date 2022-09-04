@@ -44,19 +44,12 @@ from wechaty_plugin_contrib import DingDongPlugin
 2. UI能力是通过WebService的方式暴露出去，使用Http协议。
 3. wechaty-ui提供统一的UI管理能力，能够自动生成不同插件的UI配置管理界面，以及UI界面能力。
 
-## 插件列表
+## 贡献开源插件
 
-| 插件名称                                                     | 作者                                  | 功能描述                                           |
-| ------------------------------------------------------------ | ------------------------------------- | -------------------------------------------------- |
-| [DingDongPlugin](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/src/wechaty_plugin_contrib/contrib/ding_dong_plugin.py) | [@wj-Mcat](http://github.com/wj-Mcat) | 发送`ding`，回复`dong`                             |
-| [InfoLoggerPlugin](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/src/wechaty_plugin_contrib/contrib/info_logger.py) | [@wj-Mcat](http://github.com/wj-Mcat) | 根据关键字打印好友或群聊的信息，并保存到日志当中   |
-| [InfoDownloaderPlugin](https://github.com/wechaty/python-wechaty-plugin-contrib/blob/master/src/wechaty_plugin_contrib/contrib/info_downloader.py) | [@wj-Mcat](http://github.com/wj-Mcat) | 通过浏览器下载所有好友以及群聊的相关信息           |
-| [OnFriendShipPlugin]()                                       | [@wj-Mcat](http://github.com/wj-Mcat) | 处理好友申请的事件                                 |
-| [OnRoomJoinPlugin]()                                         | [@wj-Mcat](http://github.com/wj-Mcat) | 处理群聊群友加入的事件                             |
-| [RasaRestPlugin]()                                           | [@wj-Mcat](http://github.com/wj-Mcat) | Rasa Server的Connector连接工具，可实现与Rasa的打通 |
-|                                                              |                                       |                                                    |
-|                                                              |                                       |                                                    |
-|                                                              |                                       |                                                    |
-|                                                              |                                       |                                                    |
-|                                                              |                                       |                                                    |
+欢迎给位开发者贡献自己所编写的插件，在此推荐以下方法参与贡献：
+
+
+1. 将代码贡献给社区：[python-wechaty-plugin-contrib](github.com/wechaty/python-wechaty-plugin-contrib)，详细可见
+2. 将自己的插件发布成[pypi](pypi.org/)包，详细可见
+3. 将自己的插件代码放在github中，其他开发者可直接clone使用，详细可见
 
