@@ -49,9 +49,9 @@ class QunAssistantPlugin(WechatyPlugin):
             with open(os.path.join(self.config_url, 'qun_faq.json'), 'r', encoding='utf-8') as f:
                 self.qun_faq = json.load(f)
         else:
-            self.qun_faq = {key: {} for key in self.directors.keys()}
+            self.qun_faq = {key: {} for key in self.directors}
 
-        self.qun_meida_faq = {key: {} for key in self.directors.keys()}
+        self.qun_meida_faq = {key: {} for key in self.directors}
         self.listen_to = {}
         self.sim = Taskflow("text_similarity")
         self.logger.info('QunAssistantPlugin init success')
