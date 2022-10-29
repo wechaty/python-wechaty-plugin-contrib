@@ -91,7 +91,7 @@ class AutoReplyPlugin(WechatyPlugin):
         conversation: Union[Room, Contact] = msg.room() if msg.room() else msg.talker()
         await conversation.ready()
 
-        text = msg.text()
+        # text = msg.text()
 
         # find the match rules
         for matcher, rules in self.rule_map.items():

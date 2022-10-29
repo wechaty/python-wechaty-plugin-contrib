@@ -81,7 +81,7 @@ class DingDongPlugin(WechatyPlugin):
 
 ## 使用插件
 
-python-wechaty中有仓库内置的插件，详细可见：[插件列表](/python-wechaty-plugin-contrib/plugins)，同时也是支持自定义插件的，使用方法就是：
+python-wechaty中有仓库内置的插件，详细可见：[插件列表](../plugins/index.md)，同时也是支持自定义插件的，使用方法就是：
 
 * 导入相关插件类，有时候需要对应options来初始化插件
 * 实例化插件

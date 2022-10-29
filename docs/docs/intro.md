@@ -49,7 +49,7 @@ from wechaty_plugin_contrib import DingDongPlugin
 欢迎给位开发者贡献自己所编写的插件，在此推荐以下方法参与贡献：
 
 
-1. 将代码贡献给社区：[python-wechaty-plugin-contrib](github.com/wechaty/python-wechaty-plugin-contrib)，详细可见
-2. 将自己的插件发布成[pypi](pypi.org/)包，详细可见
+1. 将代码贡献给社区：[python-wechaty-plugin-contrib](http://www.github.com/wechaty/python-wechaty-plugin-contrib)，详细可见
+2. 将自己的插件发布成[pypi](https://www.pypi.org/)包，详细可见
 3. 将自己的插件代码放在github中，其他开发者可直接clone使用，详细可见
 

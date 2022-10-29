@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # 插件库
 
-社区插件库([python-wechaty-plugin-contrib](github.com/wechaty/python-wechaty-plugin-contrib))中包含大量常见插件，也推荐开发者优先使用仓库中内置的插件。
+社区插件库([python-wechaty-plugin-contrib](http://www.github.com/wechaty/python-wechaty-plugin-contrib))中包含大量常见插件，也推荐开发者优先使用仓库中内置的插件。
 
 ## Install
 

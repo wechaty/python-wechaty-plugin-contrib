@@ -1,4 +1,4 @@
-wechaty>=0.5.dev1
+wechaty>=0.10.2
 jieba
 aiohttp
 requests

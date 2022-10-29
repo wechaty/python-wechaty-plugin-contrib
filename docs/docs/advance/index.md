@@ -8,8 +8,6 @@ python-wechaty的插件系统初衷就拆分不同的业务到不同的插件当
 
 [wechaty社区](https://github.com/wechaty/python-wechaty-plugin-contrib)包含多种插件，开发者可通过多种方式来使用和贡献自己的插件，在此将介绍三种如何贡献插件给其他开发者使用：
 
-1. 将代码贡献给社区：[python-wechaty-plugin-contrib](github.com/wechaty/python-wechaty-plugin-contrib)，详细可见[如何将代码贡献给社区](./contribute-to-community.md)
-2. 将自己的插件发布成[pypi](pypi.org/)包，详细可见[如何将插件发布成pypi包](./deploy-to-pypi.md)
-3. 将自己的插件代码放在github中，其他开发者可直接clone使用，详细可见[如何在github上分享插件](share-as-repo.md)
-
-
+1. 将代码贡献给社区：[python-wechaty-plugin-contrib](https://www.github.com/wechaty/python-wechaty-plugin-contrib)，详细可见[如何将代码贡献给社区](./contribute-to-community.md)
+2. 将自己的插件发布成[pypi](https://www.pypi.org/)包，详细可见[如何将插件发布成pypi包](./deploy-to-pypi.md)
+3. 将自己的插件代码放在github中，其他开发者可直接clone使用，详细可见[如何在github上分享插件](./share-as-repo.md)

@@ -3,6 +3,7 @@ utils to help plugins more stronger
 """
 import re
 from typing import List
+from quart import jsonify
 import importlib
 
 
@@ -33,3 +34,16 @@ def get_invalid_packages(packages: List[str]) -> List[str]:
         except:
             invalid_packages.append(package)
     return invalid_packages
+
+
+def success(data):
+    return jsonify({
+        "data": data,
+        "code": 200
+    })
+
+def error(msg):
+    return jsonify({
+        "msg": msg,
+        "code": 500
+    })
