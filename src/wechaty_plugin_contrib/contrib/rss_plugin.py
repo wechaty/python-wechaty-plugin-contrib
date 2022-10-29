@@ -40,9 +40,23 @@ def parse(url) -> List[FeedNews]:
 
 
 class RSSPlugin(WechatyPlugin):
+    """rss plugins which can push rss news into Contact & Rooms
+
+        examples:
+            >>> plugin = RSSPlugin()
+            >>> plugin.setting['url'] = 'your-own-feed-url'
+            >>> plugin.settings['room_ids'] = ["your-room-ids"]
+            >>> bot.use(plugin)
+
+    """
     VIEW_URL = '/api/plugins/rss/view'
 
     def __init__(self, options: Optional[WechatyPluginOptions] = None):
+        """_summary_
+
+        Args:
+            options (Optional[WechatyPluginOptions], optional): _description_. Defaults to None.
+        """
         super().__init__(options)
         self._init_default_setting()
     
@@ -51,10 +65,9 @@ class RSSPlugin(WechatyPlugin):
             # 每天早上九点钟推送消息
             "hour": 9,
             "max_news": 3,
-            "read": [],
             "contact_ids": [],
             "room_ids": [],
-            "url": "http://dev.chatie.io:1200/github/issue/wechaty/python-wechaty"
+            "url": "feed-url"
         }
         default_setting.update(self.setting)
         self.setting = default_setting
