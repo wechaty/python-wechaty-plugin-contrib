@@ -1,0 +1,9 @@
+{
+    "title": "插件标题",
+    "plugin_name": "RssPlugin",
+    "init_contact": "y",
+    "contact_is_multiple": "y",
+    "init_room": "y",
+    "room_is_multiple": "y",
+    "init_text": "y"
+}

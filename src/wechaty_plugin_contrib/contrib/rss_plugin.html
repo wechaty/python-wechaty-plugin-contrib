@@ -1,9 +1,109 @@
-from __future__ import annotations
-from wechaty import WechatyPlugin, Message
-from wechaty_plugin_contrib.message_controller import message_controller
-from wechaty import WechatyPlugin
+<!DOCTYPE html>
+<html>
 
-class RSSPlugin(WechatyPlugin):
-    VIEW_URL = '/api/plugins/ding_dong/view'
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+</head>
 
-    
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>配置RSS</el-header>
+            <el-main>
+                <el-form class="demo-form-inline">
+                    <el-form-item label="输入欢迎语">
+                        <el-input type="textarea" v-model="feeds" rows="5" placeholder="请输入配置好的FeedUrl源"></el-input>
+                    </el-form-item>
+                    <el-form-item label="群聊">
+                        <el-select v-model="conversation_id" filterable placeholder="请选择消息发送对象" style='width: 100%' @change="onConversationChange">
+                            <el-option v-for="room in rooms" :key="room.value" :label="room.label" :value="room.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="Feed源">
+                        <el-checkbox-group v-model="selected_feeds">
+                            <el-checkbox v-for="feed in setting.feeds" :label="feed" :key="feed">{{feed}}</el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="每天几点开始推送消息[0-23]">
+                        <el-input type="number" v-model="hour" placeholder="请输入"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">提交</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                plugin_name: "RSSPlugin",
+                feeds: [],
+                rooms: [],
+                contacts: [],
+                infos: [],
+                setting: {},
+                // 选中的feeds
+                selected_feeds: [],
+                conversation_id: null,
+                hour: 9
+            }
+        },
+        methods: {
+            onConversationChange() {
+                let sub_setting = this.setting[this.conversation_id]
+                this.selected_feeds = sub_setting['feeds']
+                this.hour = sub_setting['hour']
+            },
+            async save_setting() {
+                await axios.post(
+                    '/plugins/setting', 
+                    json={
+                        "plugin_name": this.plugin_name,
+                        "setting": this.setting
+                    }
+                )
+            },
+            async onSubmit() {
+                this.setting['feeds'] = this.feeds.split("\n");
+                this.setting[this.conversation_id] = {
+                    "feeds": this.selected_feeds,
+                    "hour": this.hour
+                }
+                await this.save_setting()
+                console.log(this)
+            }
+        },
+        async mounted(){
+            let $this = this;
+            let room_res = await axios.get('/api/plugins/api/room_select')
+            this.rooms = room_res.data.data
+
+            let contact_res = await axios.get('/api/plugins/api/contact_select')
+            this.contacts = contact_res.data.data
+            
+            let info_res = await axios.get('/api/plugins/api/info_select')
+            this.infos = info_res.data.data
+
+            let setting_res = await axios.get('/plugins/setting?plugin_name=' + this.plugin_name)
+            this.setting = setting_res.data.data
+
+            // set feeds
+            let feeds = this.setting.feeds.join("\n")
+            if (feeds == undefined) {
+                feeds = []
+            }
+            this.feeds = feeds
+        }
+    })
+</script>
+
+</html>

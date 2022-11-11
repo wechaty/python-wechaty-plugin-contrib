@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>发送消息卡片</el-header>
+            <el-main>
+                <el-form :inline="true" class="demo-form-inline">
+                    <el-form-item label="Url">
+                        <el-input v-model="form.url"></el-input>
+                      </el-form-item>
+                    <el-form-item label="Title">
+                        <el-input v-model="form.title"></el-input>
+                      </el-form-item>
+                    <el-form-item label="description">
+                        <el-input v-model="form.description"></el-input>
+                      </el-form-item>
+                    <el-form-item label="thumbnailUrl">
+                        <el-input v-model="form.thumbnailUrl"></el-input>
+                      </el-form-item>
+
+                    <el-form-item label="发送目标：群">
+                        <el-select v-model="room_ids" multiple filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in form_room_ids" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="发送目标：联系人">
+                        <el-select v-model="contact_ids" multiple filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in form_contact_ids" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    <el-form-item style="margin-top: 20px">
+                        <el-button type="primary" @click="onSubmit">保存</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                room_ids: [],
+                contact_ids: [],
+                form_contact_ids: [],
+                form_room_ids: [],
+
+                form: {
+                    url: "",
+                    title: "",   
+                    description: "",
+                    thumbnailUrl: ""
+                }
+            }
+        },
+        mounted(){
+            let $this = this;
+            axios.get('/api/plugins/api/room_select').then(function(e){
+                $this.form_room_ids = e.data.data
+            })
+            axios.get('/api/plugins/api/contact_select').then(function(e){
+                $this.form_contact_ids = e.data.data
+            })
+        },
+        methods: {
+            async onSubmit() {
+                let result = axios.post(
+                    "/api/plugins/send_url_link/send", 
+                    json = {
+                        "room_ids": this.room_ids,
+                        "contact_ids": this.contact_ids,
+                        "url_link": this.form}
+                )
+                this.$notify({
+                    title: "消息",
+                    type: "success",
+                    message: "已发送成功"
+                })
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>{{cookiecutter.title}}</el-header>
+            <el-main>
+                <el-form class="demo-form-inline">
+                    <el-form-item label="分组选择器">
+                        <el-select v-model="selected_group_name" @change="refresh_group" filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in group_names" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="分组名称【可调整】">
+                        <el-input v-model="group_name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="管理员">
+                        <el-select v-model="admin_ids" multiple filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in info" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="发送目标：群">
+                        <el-select v-model="room_ids" multiple filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in form_room_ids" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="发送目标：联系人">
+                        <el-select v-model="contact_ids" multiple filterable placeholder="请选择" style='width: 100%' >
+                            <el-option v-for="item in form_contact_ids" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    <el-form-item style="margin-top: 20px">
+                        <el-button type="primary" @click="onSubmit">保存</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                plugin_name: "PluginName",
+                admin_ids: [],
+                room_ids: [],
+                contact_ids: [],
+                info: [],
+                form_contact_ids: [],
+                form_room_ids: [],
+
+                selected_group_name: "",
+                group_name: "",
+                group_names: [],
+            }
+        },
+        mounted(){
+            let $this = this;
+            axios.get('/plugins/setting?plugin_name=RSSPlugin').then(function(e){
+                $this.form_room_ids = e.data.data
+            })
+            axios.get('/api/plugins/api/info_select').then(function(e){
+                $this.info = e.data.data
+            })
+            axios.get('/api/plugins/api/contact_select').then(function(e){
+                $this.form_contact_ids = e.data.data
+            })
+            axios.get('/plugins/message_forwarder/groups').then(function(e){
+                $this.group_names = e.data.data
+            })
+        },
+        methods: {
+            refresh_group() {
+                let $this = this;
+                axios.get('/plugins/message_forwarder/setting/' + this.selected_group_name).then(function(e){
+                    $this.admin_ids = e.data.data['admin_ids']
+                    $this.room_ids = e.data.data['room_ids']
+                    $this.contact_ids = e.data.data['contact_ids']
+                })
+                this.contact_ids = []
+                this.room_ids = []
+                this.group_name = this.selected_group_name
+            },
+            onSubmit() {
+                let $this = this;
+                axios.post("/plugins/message_forwarder/setting/" + this.group_name, json = {"room_ids": this.room_ids, "contact_ids": this.contact_ids, "admin_ids": this.admin_ids}).then(function (e) {
+                    if (e.data.code === 200) {
+                        $this.$notify({
+                            title: "消息",
+                            type: "success",
+                            message: "已更新成功"
+                        })
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+</html>
