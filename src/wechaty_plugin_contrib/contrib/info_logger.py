@@ -4,7 +4,6 @@ from typing import (
 )
 from collections import defaultdict
 from datetime import datetime
-from pyparsing import srange
 
 from wechaty import (
     WechatyPlugin,
