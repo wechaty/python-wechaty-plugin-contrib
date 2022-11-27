@@ -24,7 +24,7 @@ class DingDongPlugin(WechatyPlugin):
         if msg.text() == "ding":
             dong = self.setting.get("ding", "dong")
             if isinstance(dong, list):
-                words = []
+                words = dong
             else:
                 words = [dong]
 
